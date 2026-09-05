@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Mission Control - AI Student Cosmos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- CANVAS NỀN VŨ TRỤ -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/admin/dashboard" class="nav-brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, var(--cosmic-pink), #e11d48);">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <span>Cosmic <span style="color: var(--cosmic-pink);">Command Bridge</span></span>
+      <span class="badge badge-danger">SYSTEM</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-atom"></i> Về Buồng Lái Học Tập</a>
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện"><i class="fas fa-sun"></i></button>
+      <div id="navbar-auth-actions"></div>
+    </div>
+  </nav>
+
+  <!-- ADMIN LAYOUT -->
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <ul class="admin-nav">
+        <li class="admin-nav-item active">
+          <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> Tổng Quan Thiên Hà</a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/users"><i class="fas fa-users-gear"></i> Phi Hành Gia & Sinh Viên</a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/courses"><i class="fas fa-book-journal-whills"></i> Quản Lý Học Phần</a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/documents"><i class="fas fa-file-waveform"></i> Kho Dữ Liệu Tinh Vân</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-page-header">
+        <div>
+          <h1 class="admin-page-title">Trung Tâm Chỉ Huy Vũ Trụ</h1>
+          <p class="admin-page-subtitle">Giám sát toàn diện tín hiệu telemetry, sinh viên và hoạt động AI toàn hệ thống</p>
+        </div>
+      </div>
+
+      <!-- Telemetry KPI Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Tổng Phi Hành Gia</span>
+            <span class="stat-value" id="stat-total-users">0</span>
+          </div>
+          <div class="stat-icon purple"><i class="fas fa-user-astronaut"></i></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Tín Hiệu Chat Lượng Tử</span>
+            <span class="stat-value" id="stat-total-messages">0</span>
+          </div>
+          <div class="stat-icon blue"><i class="fas fa-atom"></i></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Học Phần Đại Học</span>
+            <span class="stat-value" id="stat-total-courses">0</span>
+          </div>
+          <div class="stat-icon emerald"><i class="fas fa-graduation-cap"></i></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Lộ Trình Ôn Thi AI</span>
+            <span class="stat-value" id="stat-total-plans">0</span>
+          </div>
+          <div class="stat-icon amber"><i class="fas fa-compass"></i></div>
+        </div>
+      </div>
+
+      <!-- Recent Users Table -->
+      <div class="table-container">
+        <div class="table-toolbar">
+          <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;">
+            <i class="fas fa-user-clock" style="color: var(--cosmic-cyan-glow);"></i> Sinh Viên Vừa Tham Gia Không Gian
+          </h3>
+          <a href="/admin/users" class="btn btn-secondary btn-sm">Xem Toàn Bộ Danh Sách <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Sinh Viên</th>
+              <th>Vai Trò</th>
+              <th>Trường Đại Học</th>
+              <th>Ngày Khởi Tạo</th>
+            </tr>
+          </thead>
+          <tbody id="recent-users-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

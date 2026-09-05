@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Phi Hành Gia & Sinh Viên - Cosmic Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- CANVAS NỀN VŨ TRỤ -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/admin/dashboard" class="nav-brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, var(--cosmic-pink), #e11d48);">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <span>Cosmic <span style="color: var(--cosmic-pink);">Command Bridge</span></span>
+      <span class="badge badge-danger">SYSTEM</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-atom"></i> Về Buồng Lái Học Tập</a>
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện"><i class="fas fa-sun"></i></button>
+      <div id="navbar-auth-actions"></div>
+    </div>
+  </nav>
+
+  <!-- ADMIN LAYOUT -->
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <ul class="admin-nav">
+        <li class="admin-nav-item">
+          <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> Tổng Quan Thiên Hà</a>
+        </li>
+        <li class="admin-nav-item active">
+          <a href="/admin/users"><i class="fas fa-users-gear"></i> Phi Hành Gia & Sinh Viên</a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/courses"><i class="fas fa-book-journal-whills"></i> Quản Lý Học Phần</a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/documents"><i class="fas fa-file-waveform"></i> Kho Dữ Liệu Tinh Vân</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-page-header">
+        <div>
+          <h1 class="admin-page-title">Quản Lý Danh Sách Sinh Viên</h1>
+          <p class="admin-page-subtitle">Danh sách tài khoản sinh viên và quyền truy cập trong hệ thống không gian</p>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div style="position: relative; width: 340px;">
+            <input type="text" id="search-user-input" class="form-control" placeholder="Tìm theo tên, email, MSSV..." oninput="loadAdminUsers(1, this.value)">
+          </div>
+        </div>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Sinh Viên</th>
+              <th>Email</th>
+              <th>Vai Trò (Role)</th>
+              <th>Chuyên Ngành</th>
+              <th>Trạng Thái</th>
+              <th>Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

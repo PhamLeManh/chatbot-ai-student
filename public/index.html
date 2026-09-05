@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Student Cosmos - Nền Tảng Trợ Lý AI Học Tập Vũ Trụ Cho Sinh Viên</title>
+  <meta name="description" content="Nền tảng Chatbot AI Vũ trụ hỗ trợ học tập thông minh cho sinh viên đại học: Giải đáp bài tập, lập kế hoạch ôn thi bứt phá, tóm tắt giáo trình và tra cứu học phần.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ================= CANVAS NỀN VŨ TRỤ ================= -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">
+        <i class="fas fa-meteor"></i>
+      </div>
+      <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+      <span class="brand-badge">🪐 2026 AI</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link active"><i class="fas fa-satellite"></i> Trang Chủ</a></li>
+      <li><a href="/chat" class="nav-link"><i class="fas fa-atom"></i> Chatbot AI</a></li>
+      <li><a href="/study-plan" class="nav-link"><i class="fas fa-compass"></i> Lộ Trình Ôn Thi</a></li>
+      <li><a href="/admin" class="nav-link"><i class="fas fa-shield-halved"></i> Quản Trị</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Không gian / Cực quang">
+        <i class="fas fa-sun"></i>
+      </button>
+      <div id="navbar-auth-actions" style="display: flex; gap: 0.75rem;">
+        <a href="/login" class="btn btn-secondary btn-sm"><i class="fas fa-right-to-bracket"></i> Đăng Nhập</a>
+        <a href="/register" class="btn btn-primary btn-sm"><i class="fas fa-user-astronaut"></i> Đăng Ký</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="container">
+      
+      <!-- Cosmic Badge -->
+      <span class="badge badge-primary" style="margin-bottom: 1.5rem; padding: 0.5rem 1.25rem; font-size: 0.9rem; border-radius: var(--radius-full); box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);">
+        <i class="fas fa-sparkles" style="color: var(--cosmic-cyan-glow);"></i> VŨ TRỤ TRÍ TUỆ HỌC TẬP SINH VIÊN 2026
+      </span>
+
+      <!-- Title & Headline -->
+      <h1 class="hero-title">
+        Bứt Phá Điểm Số Cùng <br>
+        <span class="text-gradient">Trí Tuệ Nhân Tạo Không Gian Sâu</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Khám phá không gian tri thức cùng Trợ lý AI thế hệ mới: Giải đáp bài tập thuật toán, phân tích đề cương bài giảng và tự động thiết lập lộ trình ôn thi cá nhân hóa chi tiết theo từng ngày.
+      </p>
+
+      <!-- 3D Cosmic Orbit Graphic -->
+      <div class="cosmic-orbit-wrap">
+        <div class="orbit-ring orbit-ring-1">
+          <div class="orbit-satellite" style="background: var(--cosmic-cyan-glow);"></div>
+        </div>
+        <div class="orbit-ring orbit-ring-2">
+          <div class="orbit-satellite" style="background: var(--cosmic-pink); top: auto; bottom: -6px;"></div>
+        </div>
+        <div class="orbit-center-orb"></div>
+      </div>
+
+      <!-- Hero Call-To-Action Buttons -->
+      <div class="hero-buttons">
+        <a href="/chat" class="btn btn-primary btn-lg">
+          <i class="fas fa-rocket"></i> Bắt Đầu Du Hành Chat AI
+        </a>
+        <a href="/study-plan" class="btn btn-secondary btn-lg">
+          <i class="fas fa-compass"></i> Thiết Lập Lộ Trình Ôn Thi
+        </a>
+        <a href="/login" class="btn btn-accent btn-lg" onclick="event.preventDefault(); quickDemoLogin('student');">
+          <i class="fas fa-bolt"></i> 1-Click Demo Sinh Viên
+        </a>
+      </div>
+
+      <!-- Quick Telemetry Stats Strip -->
+      <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 4rem; flex-wrap: wrap;">
+        <div class="card" style="padding: 1.25rem 2rem; min-width: 170px; border-color: rgba(139, 92, 246, 0.3);">
+          <div style="font-size: 2.2rem; font-weight: 800; color: var(--cosmic-cyan-glow); font-family: var(--font-display); text-shadow: 0 0 15px rgba(6, 182, 212, 0.5);">24/7</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Sẵn Sàng Hỗ Trợ</div>
+        </div>
+        <div class="card" style="padding: 1.25rem 2rem; min-width: 170px; border-color: rgba(139, 92, 246, 0.3);">
+          <div style="font-size: 2.2rem; font-weight: 800; color: var(--cosmic-violet); font-family: var(--font-display); text-shadow: 0 0 15px var(--primary-glow);">100%</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Cá Nhân Hóa Lộ Trình</div>
+        </div>
+        <div class="card" style="padding: 1.25rem 2rem; min-width: 170px; border-color: rgba(139, 92, 246, 0.3);">
+          <div style="font-size: 2.2rem; font-weight: 800; color: var(--success); font-family: var(--font-display); text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);">< 1.5s</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Tốc Độ Phản Hồi AI</div>
+        </div>
+        <div class="card" style="padding: 1.25rem 2rem; min-width: 170px; border-color: rgba(139, 92, 246, 0.3);">
+          <div style="font-size: 2.2rem; font-weight: 800; color: var(--warning); font-family: var(--font-display); text-shadow: 0 0 15px rgba(245, 158, 11, 0.5);">A+</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Mục Tiêu Thiên Hà</div>
+        </div>
+      </div>
+
+      <!-- ================= FEATURES GRID ================= -->
+      <div class="features-grid">
+        <div class="card feature-card">
+          <div class="feature-icon" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4);">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.6rem;">Siêu Trí Tuệ Học Thuật Đa Năng</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Giải toán cao cấp, giải thích thuật toán & debug code đa ngôn ngữ (C++, Python, JS, Java), phân tích ngữ pháp tiếng Anh và cấu trúc luận văn chuyên sâu.
+          </p>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.2); color: var(--cosmic-cyan-glow); border: 1px solid rgba(6, 182, 212, 0.4);">
+            <i class="fas fa-compass"></i>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.6rem;">Trạm Lập Lộ Trình Ôn Thi AI</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Nhập ngày thi và mục tiêu điểm số, AI sẽ tự động phân bổ lịch ôn theo từng ngày, checklist nhiệm vụ tương tác và đếm ngược kỳ thi khoa học.
+          </p>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">
+            <i class="fas fa-file-waveform"></i>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.6rem;">Phân Tích Dữ Liệu Tinh Vân PDF</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Tải lên tài liệu PDF, Slide bài giảng, tệp Word để AI tự động trích xuất ý chính cốt lõi, công thức quan trọng và sinh câu hỏi trắc nghiệm ôn tập.
+          </p>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">
+            <i class="fas fa-fire-flame-curved"></i>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.6rem;">Tháp Năng Lượng & Streak Học Tập</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Ghi nhận chuỗi ngày học liên tục (Streak), thống kê nhiệm vụ hoàn thành và bảng điều khiển quản trị viên theo dõi học phần trường học.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CTA BANNER ================= -->
+  <section style="padding: 3rem 0 6rem; position: relative; z-index: 1;">
+    <div class="container">
+      <div class="card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(6, 182, 212, 0.2)); border: 1px solid rgba(139, 92, 246, 0.45); padding: 4rem 2rem; text-align: center; border-radius: var(--radius-xl); box-shadow: 0 0 50px rgba(139, 92, 246, 0.25);">
+        <h2 style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; margin-bottom: 1rem;">Sẵn Sàng Du Hành Chinh Phục Điểm A+?</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin: 0 auto 2.25rem;">
+          Đăng ký tài khoản miễn phí hoặc trải nghiệm ngay bằng tài khoản Phi hành gia Sinh viên Demo chỉ với một cú nhấp chuột.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="/register" class="btn btn-primary btn-lg"><i class="fas fa-user-plus"></i> Đăng Ký Tài Khoản Miễn Phí</a>
+          <a href="/chat" class="btn btn-secondary btn-lg"><i class="fas fa-atom"></i> Thử Chat Trực Tiếp Ngay</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer style="background: rgba(7, 11, 26, 0.85); backdrop-filter: blur(16px); border-top: 1px solid var(--border-color); padding: 2.5rem 0; margin-top: auto; position: relative; z-index: 1;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <div class="brand-icon" style="width: 36px; height: 36px; font-size: 1.1rem;">
+          <i class="fas fa-meteor"></i>
+        </div>
+        <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;">AI Student Cosmos</span>
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.9rem;">
+        &copy; 2026 AI Student Cosmos Platform. Vũ Trụ Tri Thức Học Tập Cho Sinh Viên.
+      </p>
+    </div>
+  </footer>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

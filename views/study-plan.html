@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lộ Trình Ôn Thi Vũ Trụ & Kế Hoạch Học Tập AI - AI Student Cosmos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ================= CANVAS NỀN VŨ TRỤ ================= -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">
+        <i class="fas fa-meteor"></i>
+      </div>
+      <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/chat" class="nav-link"><i class="fas fa-atom"></i> Chatbot Lượng Tử</a></li>
+      <li><a href="/study-plan" class="nav-link active"><i class="fas fa-compass"></i> Lộ Trình Ôn Thi</a></li>
+      <li><a href="/profile" class="nav-link"><i class="fas fa-user-astronaut"></i> Hồ Sơ Phi Hành Gia</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Không gian / Cực quang">
+        <i class="fas fa-sun"></i>
+      </button>
+      <div id="navbar-auth-actions"></div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main style="padding: calc(var(--header-height) + 2.5rem) 1.5rem 5rem; max-width: 1140px; margin: 0 auto; width: 100%; position: relative; z-index: 1;">
+    
+    <!-- Page Top Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.25rem; flex-wrap: wrap; gap: 1.25rem;">
+      <div>
+        <h1 style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
+          <i class="fas fa-compass text-gradient"></i> Lộ Trình Ôn Thi Thiên Hà
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0.35rem;">
+          Trợ lý AI phân bổ hải trình học tập chi tiết từng ngày giúp bạn chinh phục điểm A+ xuất sắc
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openCreatePlanModal()">
+        <i class="fas fa-magic"></i> Tạo Kế Hoạch Mới Bằng AI
+      </button>
+    </div>
+
+    <!-- Plans Selector Bar -->
+    <div id="study-plans-list"></div>
+
+    <!-- Active Plan Detail Container -->
+    <div id="active-plan-detail"></div>
+
+  </main>
+
+  <!-- ================= MODAL TẠO LỘ TRÌNH AI ================= -->
+  <div class="modal-backdrop" id="create-plan-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-wand-magic-sparkles" style="color: var(--cosmic-cyan-glow);"></i> Thiết Lập Lộ Trình Ôn Thi AI</h3>
+        <button class="modal-close" onclick="closeCreatePlanModal()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form id="create-plan-form">
+        <div class="form-group">
+          <label class="form-label" for="goal">Mục Tiêu Học Tập / Ôn Thi <span style="color: var(--accent);">*</span></label>
+          <input type="text" id="goal" class="form-control" placeholder="Vd: Đạt điểm 9.5+ môn Cấu trúc dữ liệu và giải thuật" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="targetExam">Tên Kỳ Thi / Học Phần Trọng Tâm</label>
+          <input type="text" id="targetExam" class="form-control" placeholder="Vd: Thi Cuối Kỳ Học Kỳ 1, Chứng chỉ IELTS 7.5">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="targetDate">Ngày Thi / Hạn Chót <span style="color: var(--accent);">*</span></label>
+            <input type="date" id="targetDate" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="dailyHours">Thời Lượng Học / Ngày</label>
+            <select id="dailyHours" class="form-control">
+              <option value="1.5">1.5 giờ / ngày</option>
+              <option value="2">2 giờ / ngày</option>
+              <option value="3" selected>3 giờ / ngày (Khuyên dùng)</option>
+              <option value="4">4 giờ / ngày</option>
+              <option value="6">6 giờ / ngày (Cấp tốc)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subjects">Các Môn / Chuyên Đề Trọng Tâm (Cách nhau bởi dấu phẩy)</label>
+          <input type="text" id="subjects" class="form-control" placeholder="Cây nhị phân, Thuật toán đồ thị, Luyện đề thi 2026">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.85rem; margin-top: 1.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeCreatePlanModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary" id="create-plan-submit-btn">
+            <i class="fas fa-rocket"></i> Kích Hoạt Kế Hoạch Bằng AI
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/studyPlan.js"></script>
+</body>
+</html>

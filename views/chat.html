@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot AI Sinh Viên - Trạm Giao Tiếp Lượng Tử</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/chat.css">
+</head>
+<body>
+
+  <!-- ================= CANVAS NỀN VŨ TRỤ ================= -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button class="toggle-sidebar-btn" id="toggle-sidebar-btn" title="Ẩn/Hiện Danh Sách Tín Hiệu Hội Thoại">
+        <i class="fas fa-bars-staggered"></i>
+      </button>
+      <a href="/" class="nav-brand">
+        <div class="brand-icon">
+          <i class="fas fa-meteor"></i>
+        </div>
+        <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="/chat" class="nav-link active"><i class="fas fa-atom"></i> Chatbot Lượng Tử</a></li>
+      <li><a href="/study-plan" class="nav-link"><i class="fas fa-compass"></i> Lộ Trình Ôn Thi</a></li>
+      <li><a href="/profile" class="nav-link"><i class="fas fa-user-astronaut"></i> Hồ Sơ Phi Hành Gia</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Không gian / Cực quang">
+        <i class="fas fa-sun"></i>
+      </button>
+      <div id="navbar-auth-actions"></div>
+    </div>
+  </nav>
+
+  <!-- ================= CHAT APP CONTAINER ================= -->
+  <div class="chat-app-container">
+
+    <!-- SIDEBAR: TRẠM TÍN HIỆU & LỊCH SỬ ĐOẠN CHAT -->
+    <aside class="chat-sidebar" id="chat-sidebar">
+      <div class="sidebar-header">
+        <button class="new-chat-btn" id="new-chat-btn">
+          <i class="fas fa-plus"></i> Phiên Hội Thoại Mới
+        </button>
+        <div class="sidebar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Tìm kiếm tín hiệu chat..." id="search-conv-input">
+        </div>
+      </div>
+
+      <div class="conversation-list" id="conversation-list">
+        <!-- Rendered by JS -->
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT WORKSPACE (BUỒNG LÁI TRỰC TUYẾN) -->
+    <main class="chat-main">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--success); box-shadow: 0 0 10px var(--success); animation: pulseMic 2s infinite;"></div>
+            <h3 class="active-conv-title" id="active-conv-title">Tín hiệu hội thoại mới</h3>
+          </div>
+          <span class="badge badge-primary" style="font-size: 0.72rem; padding: 2px 8px;">QUANTUM AI ONLINE</span>
+        </div>
+
+        <div class="chat-header-actions">
+          <button class="btn btn-secondary btn-sm" id="export-chat-btn" title="Xuất toàn bộ nhật ký chat ra file text">
+            <i class="fas fa-file-export"></i> <span class="d-none-sm">Xuất Nhật Ký</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="clear-chat-btn" title="Làm mới đoạn chat này" style="color: var(--accent);">
+            <i class="fas fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Stream Area -->
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages rendered by JS -->
+      </div>
+
+      <!-- Quick Prompt Suggestions Bar (Cosmic Capsules) -->
+      <div class="quick-prompts-bar" id="quick-prompts-bar">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Chat Input Area (Bàn Điều Khiển Không Gian) -->
+      <div class="chat-input-area">
+        <div id="attachment-preview-bar" class="attachment-preview-bar"></div>
+
+        <form id="chat-form" class="chat-input-box">
+          <textarea 
+            id="chat-input" 
+            class="chat-textarea" 
+            rows="1" 
+            placeholder="Hỏi AI bất kỳ bài tập, thuật toán, công thức hoặc dán nội dung cần tóm tắt... (Enter để gửi, Shift+Enter xuống dòng)"></textarea>
+
+          <div class="chat-input-toolbar">
+            <div class="toolbar-left">
+              <label for="chat-file-input" class="tool-btn" title="Đính kèm tài liệu phân tích (PDF, Word, TXT, Hình ảnh)" style="margin: 0; cursor: pointer;">
+                <i class="fas fa-paperclip"></i>
+              </label>
+              <input type="file" id="chat-file-input" style="display: none;" accept=".pdf,.doc,.docx,.txt,.md,.png,.jpg,.jpeg">
+
+              <button type="button" class="tool-btn" id="voice-input-btn" title="Nhập liệu bằng giọng nói tiếng Việt">
+                <i class="fas fa-microphone"></i>
+              </button>
+            </div>
+
+            <button type="submit" class="send-btn" id="send-btn" title="Phóng tín hiệu / Gửi câu hỏi">
+              <i class="fas fa-rocket"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/chat.js"></script>
+</body>
+</html>

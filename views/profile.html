@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Sơ Phi Hành Gia Sinh Viên - AI Student Cosmos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ================= CANVAS NỀN VŨ TRỤ ================= -->
+  <canvas id="cosmic-canvas"></canvas>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">
+        <i class="fas fa-meteor"></i>
+      </div>
+      <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/chat" class="nav-link"><i class="fas fa-atom"></i> Chatbot Lượng Tử</a></li>
+      <li><a href="/study-plan" class="nav-link"><i class="fas fa-compass"></i> Lộ Trình Ôn Thi</a></li>
+      <li><a href="/profile" class="nav-link active"><i class="fas fa-user-astronaut"></i> Hồ Sơ Phi Hành Gia</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Không gian / Cực quang">
+        <i class="fas fa-sun"></i>
+      </button>
+      <div id="navbar-auth-actions"></div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main style="padding: calc(var(--header-height) + 2.5rem) 1.5rem 5rem; max-width: 1140px; margin: 0 auto; width: 100%; position: relative; z-index: 1;">
+
+    <!-- Top Profile Cosmic Banner -->
+    <div class="card" style="margin-bottom: 2.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.75rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(6, 182, 212, 0.15)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 0 35px rgba(139, 92, 246, 0.2);">
+      <div style="display: flex; align-items: center; gap: 1.75rem;">
+        <div style="position: relative;">
+          <img id="profile-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="user-avatar" style="width: 88px; height: 88px; border-width: 3px; border-color: var(--cosmic-cyan-glow);">
+        </div>
+        <div>
+          <h2 id="profile-name" style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: #ffffff;">Đang tải...</h2>
+          <p id="profile-school" style="color: var(--text-muted); font-size: 0.98rem; margin-top: 2px;">Đang tải thông tin trường học...</p>
+          <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
+            <span id="profile-role-badge" class="badge badge-primary">ASTRONAUT STUDENT</span>
+            <span id="profile-major-badge" class="badge badge-success">KHOA HỌC DỮ LIỆU</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supernova Streak Energy Box -->
+      <div style="background: rgba(10, 16, 36, 0.85); border: 1px solid rgba(245, 158, 11, 0.4); padding: 1.15rem 1.75rem; border-radius: var(--radius-md); text-align: center; box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);">
+        <div style="font-size: 2.2rem; font-weight: 800; color: var(--warning); display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);">
+          <i class="fas fa-fire-flame-curved"></i> <span id="profile-streak-count">1</span>
+        </div>
+        <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">Supernova Streak (Ngày)</span>
+      </div>
+    </div>
+
+    <!-- Analytics Stats Grid (Telemetry Metrics) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+      <div class="card" style="text-align: center; padding: 1.5rem;">
+        <i class="fas fa-atom" style="font-size: 1.8rem; color: var(--cosmic-violet); margin-bottom: 0.6rem; filter: drop-shadow(0 0 8px var(--primary-glow));"></i>
+        <div id="stat-conversations" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800;">0</div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Cuộc Hội Thoại Lượng Tử</span>
+      </div>
+
+      <div class="card" style="text-align: center; padding: 1.5rem;">
+        <i class="fas fa-compass" style="font-size: 1.8rem; color: var(--cosmic-cyan-glow); margin-bottom: 0.6rem; filter: drop-shadow(0 0 8px var(--cosmic-cyan));"></i>
+        <div id="stat-plans" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800;">0</div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Hải Trình Lộ Trình Đã Tạo</span>
+      </div>
+
+      <div class="card" style="text-align: center; padding: 1.5rem;">
+        <i class="fas fa-circle-check" style="font-size: 1.8rem; color: var(--success); margin-bottom: 0.6rem; filter: drop-shadow(0 0 8px var(--success));"></i>
+        <div id="stat-tasks" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800;">0</div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Nhiệm Vụ Đã Hoàn Thành</span>
+      </div>
+
+      <div class="card" style="text-align: center; padding: 1.5rem;">
+        <i class="fas fa-file-waveform" style="font-size: 1.8rem; color: var(--warning); margin-bottom: 0.6rem; filter: drop-shadow(0 0 8px var(--warning));"></i>
+        <div id="stat-docs" style="font-family: var(--font-display); font-size: 2rem; font-weight: 800;">0</div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Tài Liệu Tinh Vân Đã Tải</span>
+      </div>
+    </div>
+
+    <!-- Forms Grid (Update Profile + Change Password) -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+      <!-- Update Profile -->
+      <div class="card">
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;">
+          <i class="fas fa-user-gear" style="color: var(--cosmic-cyan-glow);"></i> Cập Nhật Thông Tin Cá Nhân
+        </h3>
+
+        <form id="profile-form">
+          <div class="form-group">
+            <label class="form-label" for="edit-name">Họ và Tên</label>
+            <input type="text" id="edit-name" class="form-control" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="edit-studentId">Mã Số Sinh Viên (MSSV)</label>
+              <input type="text" id="edit-studentId" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="edit-major">Chuyên Ngành</label>
+              <input type="text" id="edit-major" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-university">Trường Đại Học</label>
+            <input type="text" id="edit-university" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-bio">Giới Thiệu Bản Thân & Mục Tiêu</label>
+            <textarea id="edit-bio" class="form-control" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-floppy-disk"></i> Lưu Hồ Sơ Vũ Trụ
+          </button>
+        </form>
+      </div>
+
+      <!-- Change Password -->
+      <div class="card">
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;">
+          <i class="fas fa-shield-halved" style="color: var(--accent);"></i> Đổi Mật Khẩu Bảo Mật
+        </h3>
+
+        <form id="password-form">
+          <div class="form-group">
+            <label class="form-label" for="current-password">Mật Khẩu Hiện Tại</label>
+            <input type="password" id="current-password" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-password">Mật Khẩu Mới (Tối thiểu 6 ký tự)</label>
+            <input type="password" id="new-password" class="form-control" minlength="6" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirm-new-password">Nhập Lại Mật Khẩu Mới</label>
+            <input type="password" id="confirm-new-password" class="form-control" minlength="6" required>
+          </div>
+
+          <button type="submit" class="btn btn-secondary" style="width: 100%;">
+            <i class="fas fa-key"></i> Cập Nhật Mật Khẩu Mới
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/js/cosmic-stars.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = getToken();
+      if (!token) {
+        window.location.href = '/login';
+        return;
+      }
+
+      try {
+        const result = await fetchAPI('/api/users/stats');
+        const { user, streak, totalConversations, totalStudyPlans, completedTasks, totalDocuments } = result.data;
+
+        document.getElementById('profile-name').innerText = user.name;
+        document.getElementById('profile-school').innerText = `${user.university || 'Đại học'} - MSSV: ${user.studentId || 'Chưa cập nhật'}`;
+        document.getElementById('profile-role-badge').innerText = user.role === 'admin' ? 'SYSTEM COMMANDER' : 'ASTRONAUT STUDENT';
+        document.getElementById('profile-major-badge').innerText = user.major || 'Đại học';
+        document.getElementById('profile-avatar').src = user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150';
+        document.getElementById('profile-streak-count').innerText = streak ? streak.currentCount : 1;
+
+        document.getElementById('stat-conversations').innerText = totalConversations;
+        document.getElementById('stat-plans').innerText = totalStudyPlans;
+        document.getElementById('stat-tasks').innerText = completedTasks;
+        document.getElementById('stat-docs').innerText = totalDocuments;
+
+        // Fill form
+        document.getElementById('edit-name').value = user.name || '';
+        document.getElementById('edit-studentId').value = user.studentId || '';
+        document.getElementById('edit-major').value = user.major || '';
+        document.getElementById('edit-university').value = user.university || '';
+        document.getElementById('edit-bio').value = user.bio || '';
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+
+      // Update Profile Form
+      document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('edit-name').value.trim();
+        const studentId = document.getElementById('edit-studentId').value.trim();
+        const major = document.getElementById('edit-major').value.trim();
+        const university = document.getElementById('edit-university').value.trim();
+        const bio = document.getElementById('edit-bio').value.trim();
+
+        try {
+          const res = await fetchAPI('/api/auth/profile', {
+            method: 'PUT',
+            body: JSON.stringify({ name, studentId, major, university, bio }),
+          });
+          setAuthSession(getToken(), res.data);
+          showToast('Cập nhật hồ sơ phi hành gia thành công!', 'success');
+          setTimeout(() => location.reload(), 600);
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      });
+
+      // Change Password Form
+      document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const currentPassword = document.getElementById('current-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-new-password').value;
+
+        if (newPassword !== confirmPassword) {
+          showToast('Mật khẩu mới không khớp!', 'warning');
+          return;
+        }
+
+        try {
+          const res = await fetchAPI('/api/auth/change-password', {
+            method: 'PUT',
+            body: JSON.stringify({ currentPassword, newPassword }),
+          });
+          showToast(res.message, 'success');
+          document.getElementById('password-form').reset();
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
