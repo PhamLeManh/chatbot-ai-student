@@ -673,36 +673,49 @@ function handleExportChat() {
 
 function getWelcomeMessageHtml() {
   const user = getCurrentUser();
+
+  const ntuMajors = [
+    { icon: 'fa-palette', label: 'Thiết kế đồ họa', prompt: 'Tư vấn chương trình đào tạo và cơ hội việc làm ngành Thiết kế đồ họa tại NTU' },
+    { icon: 'fa-torii-gate', label: 'Ngôn ngữ Nhật', prompt: 'Tư vấn chuẩn đầu ra JLPT và cơ hội làm việc tại Nhật Bản ngành Ngôn ngữ Nhật NTU' },
+    { icon: 'fa-globe-asia', label: 'Ngôn ngữ Hàn Quốc', prompt: 'Tư vấn học bổng và cơ hội việc làm tập đoàn Hàn Quốc ngành Ngôn ngữ Hàn NTU' },
+    { icon: 'fa-earth-americas', label: 'Quốc tế học', prompt: 'Tư vấn cơ hội nghề nghiệp ngoại giao và tổ chức phi chính phủ ngành Quốc tế học NTU' },
+    { icon: 'fa-bullhorn', label: 'Quan hệ công chúng', prompt: 'Tư vấn ngành Quan hệ công chúng (PR) và kỹ năng xử lý khủng hoảng truyền thông tại NTU' },
+    { icon: 'fa-briefcase', label: 'Quản trị kinh doanh', prompt: 'Tư vấn mô hình vườn ươm khởi nghiệp và Digital Marketing ngành Quản trị kinh doanh NTU' },
+    { icon: 'fa-chart-line', label: 'Tài chính – Ngân hàng', prompt: 'Tư vấn xu hướng Ngân hàng số và Fintech ngành Tài chính – Ngân hàng NTU' },
+    { icon: 'fa-file-invoice-dollar', label: 'Kế toán', prompt: 'Tư vấn định hướng chứng chỉ nghề nghiệp và phần mềm thực hành ngành Kế toán NTU' },
+    { icon: 'fa-laptop-code', label: 'Công nghệ thông tin', prompt: 'Tư vấn chuyên ngành AI & Kỹ thuật phần mềm ngành Công nghệ thông tin NTU' },
+    { icon: 'fa-couch', label: 'Thiết kế nội thất', prompt: 'Tư vấn chương trình đào tạo và đồ án thực tế ngành Thiết kế nội thất NTU' },
+  ];
+
+  const majorChips = ntuMajors.map(m => `
+    <button class="btn btn-secondary btn-sm" style="font-size:0.8rem; padding: 0.4rem 0.8rem;" onclick="handleQuickPromptClick('${m.prompt}')">
+      <i class="fas ${m.icon}"></i> ${m.label}
+    </button>
+  `).join('');
+
   return `
-    <div style="text-align: center; max-width: 640px; margin: 2.5rem auto; padding: 2rem;">
-      <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 1.5rem;">
-        <div style="width: 80px; height: 80px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--cosmic-violet), var(--cosmic-cyan)); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #fff; box-shadow: 0 0 35px var(--primary-glow); position: relative; z-index: 2;">
-          <i class="fas fa-meteor"></i>
-        </div>
-        <div style="position: absolute; inset: -6px; border-radius: var(--radius-lg); border: 1px dashed rgba(6, 182, 212, 0.6); animation: orbitRotate 15s linear infinite; z-index: 1;"></div>
+    <div style="text-align: center; max-width: 720px; margin: 2rem auto; padding: 1.5rem;">
+      <div style="width: 64px; height: 64px; border-radius: var(--radius-lg); background: var(--primary); color: var(--primary-text); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1.25rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+        <i class="fas fa-graduation-cap"></i>
       </div>
 
-      <span class="badge badge-primary" style="margin-bottom: 0.85rem; padding: 4px 14px; font-size: 0.8rem;">
-        <i class="fas fa-satellite" style="color: var(--cosmic-cyan-glow);"></i> TRẠM GIAO TIẾP LƯỢNG TỬ ĐÃ KẾT NỐI
+      <span class="badge badge-primary" style="margin-bottom: 0.75rem; padding: 3px 12px; font-size: 0.78rem;">
+        <i class="fas fa-university"></i> TRƯỜNG ĐẠI HỌC NGUYỄN TRÃI (NTU)
       </span>
 
-      <h2 style="font-family: var(--font-display); font-size: 1.9rem; font-weight: 800; margin-bottom: 0.6rem; color: #ffffff;">
-        Xin chào, ${user ? user.name : 'Phi Hành Gia Sinh Viên'}! 🚀
+      <h2 style="font-family: var(--font-display); font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+        Xin chào, ${user ? user.name : 'Sinh Viên / Thí Sinh NTU'}!
       </h2>
-      <p style="color: var(--text-muted); font-size: 1.02rem; margin-bottom: 2rem; line-height: 1.7;">
-        Mình là <strong>AI Student Cosmos</strong>. Hãy gửi bất kỳ câu hỏi nào về giải thuật, toán học cao cấp, tiếng Anh học thuật hoặc tải lên tài liệu để bắt đầu phân tích!
+      <p style="color: var(--text-muted); font-size: 0.98rem; margin-bottom: 1.5rem; line-height: 1.6;">
+        Mình là <strong>Trợ lý AI Đại học Nguyễn Trãi</strong>. Hãy chọn ngành bạn quan tâm để nhận tư vấn tuyển sinh hoặc đặt câu hỏi học tập chuyên sâu:
       </p>
 
-      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-        <button class="btn btn-secondary btn-sm" onclick="handleQuickPromptClick('Giải thích thuật toán Dijkstra và viết code minh họa bằng C++')">
-          <i class="fas fa-code" style="color: var(--cosmic-cyan-glow);"></i> Code Dijkstra C++
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="handleQuickPromptClick('Lập đề cương ôn thi trắc nghiệm môn Triết học Mác - Lênin')">
-          <i class="fas fa-book" style="color: var(--cosmic-violet);"></i> Đề cương Triết học
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="handleQuickPromptClick('Cách tính tích phân kép và các dạng bài tập điển hình môn Giải tích 2')">
-          <i class="fas fa-square-root-variable" style="color: var(--warning);"></i> Toán Giải tích 2
-        </button>
+      <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        ${majorChips}
+      </div>
+
+      <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.8rem; color: var(--text-dim);">
+        <i class="fas fa-info-circle"></i> Bạn cũng có thể đính kèm slide/tài liệu ôn tập hoặc đặt câu hỏi giải bài tập bất kỳ!
       </div>
     </div>
   `;

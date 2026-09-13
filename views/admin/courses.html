@@ -3,28 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Lý Học Phần / Môn Học - Cosmic Admin</title>
+  <title>Quản Lý Học Phần 10 Ngành - Đại Học Nguyễn Trãi (NTU)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 
-  <!-- CANVAS NỀN VŨ TRỤ -->
-  <canvas id="cosmic-canvas"></canvas>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="/admin/dashboard" class="nav-brand">
-      <div class="brand-icon" style="background: linear-gradient(135deg, var(--cosmic-pink), #e11d48);">
-        <i class="fas fa-shield-halved"></i>
+      <div class="brand-icon">
+        <i class="fas fa-shield-alt"></i>
       </div>
-      <span>Cosmic <span style="color: var(--cosmic-pink);">Command Bridge</span></span>
-      <span class="badge badge-danger">SYSTEM</span>
+      <span>Quản Trị <span style="font-weight: 800;">ĐH Nguyễn Trãi</span></span>
+      <span class="brand-badge">ADMIN</span>
     </a>
 
     <div class="nav-actions">
-      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-atom"></i> Về Buồng Lái Học Tập</a>
+      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-comments"></i> Về Chatbot AI</a>
       <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện"><i class="fas fa-sun"></i></button>
       <div id="navbar-auth-actions"></div>
     </div>
@@ -36,16 +34,16 @@
     <aside class="admin-sidebar">
       <ul class="admin-nav">
         <li class="admin-nav-item">
-          <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> Tổng Quan Thiên Hà</a>
+          <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> <span>Tổng Quan NTU</span></a>
         </li>
         <li class="admin-nav-item">
-          <a href="/admin/users"><i class="fas fa-users-gear"></i> Phi Hành Gia & Sinh Viên</a>
+          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên & Người Dùng</span></a>
         </li>
         <li class="admin-nav-item active">
-          <a href="/admin/courses"><i class="fas fa-book-journal-whills"></i> Quản Lý Học Phần</a>
+          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành & Học Phần</span></a>
         </li>
         <li class="admin-nav-item">
-          <a href="/admin/documents"><i class="fas fa-file-waveform"></i> Kho Dữ Liệu Tinh Vân</a>
+          <a href="/admin/documents"><i class="fas fa-file-alt"></i> <span>Kho Tài Liệu Học Tập</span></a>
         </li>
       </ul>
     </aside>
@@ -54,17 +52,17 @@
     <main class="admin-content">
       <div class="admin-page-header">
         <div>
-          <h1 class="admin-page-title">Quản Lý Học Phần & Môn Học</h1>
-          <p class="admin-page-subtitle">Danh mục các học phần đại học được AI hỗ trợ trợ giảng và giải đáp bài tập</p>
+          <h1 class="admin-page-title">Quản Lý Học Phần 10 Ngành Đào Tạo NTU</h1>
+          <p class="admin-page-subtitle">Danh mục học phần của 10 ngành đào tạo được AI hỗ trợ trợ giảng và giải đáp bài tập</p>
         </div>
 
         <button class="btn btn-primary" onclick="openCourseModal()">
-          <i class="fas fa-plus"></i> Khởi Tạo Học Phần Mới
+          <i class="fas fa-plus"></i> Thêm Học Phần Mới
         </button>
       </div>
 
       <!-- Courses Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.75rem;" id="courses-grid">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;" id="courses-grid">
         <!-- Rendered by JS -->
       </div>
     </main>
@@ -74,26 +72,26 @@
   <div class="modal-backdrop" id="course-modal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-book-medical" style="color: var(--cosmic-cyan-glow);"></i> Thêm Mới Học Phần</h3>
+        <h3 class="modal-title"><i class="fas fa-book-medical"></i> Thêm Học Phần Mới - ĐH Nguyễn Trãi</h3>
         <button class="modal-close" onclick="closeCourseModal()"><i class="fas fa-times"></i></button>
       </div>
 
       <form onsubmit="handleSaveCourse(event)">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
-            <label class="form-label" for="course-code">Mã Học Phần <span style="color: var(--accent);">*</span></label>
-            <input type="text" id="course-code" class="form-control" placeholder="Vd: IT3040" required>
+            <label class="form-label" for="course-code">Mã Học Phần <span style="color: var(--danger);">*</span></label>
+            <input type="text" id="course-code" class="form-control" placeholder="Vd: NTU-IT201" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="course-credits">Số Tín Chỉ <span style="color: var(--accent);">*</span></label>
+            <label class="form-label" for="course-credits">Số Tín Chỉ <span style="color: var(--danger);">*</span></label>
             <input type="number" id="course-credits" class="form-control" value="3" min="1" max="10" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="course-name">Tên Học Phần <span style="color: var(--accent);">*</span></label>
-          <input type="text" id="course-name" class="form-control" placeholder="Vd: Cấu Trúc Dữ Liệu & Giải Thuật Nâng Cao" required>
+          <label class="form-label" for="course-name">Tên Học Phần <span style="color: var(--danger);">*</span></label>
+          <input type="text" id="course-name" class="form-control" placeholder="Vd: Cấu Trúc Dữ Liệu & Phát Triển Ứng Dụng Web/AI" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
@@ -103,25 +101,24 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="course-department">Khoa / Viện</label>
-            <input type="text" id="course-department" class="form-control" placeholder="Khoa CNTT">
+            <label class="form-label" for="course-department">Khoa / Chuyên Ngành NTU</label>
+            <input type="text" id="course-department" class="form-control" placeholder="Khoa Công Nghệ Thông Tin">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="course-description">Mô Tả & Đề Cương Tóm Tắt</label>
+          <label class="form-label" for="course-description">Mô Tả Học Phần & Đề Cương</label>
           <textarea id="course-description" class="form-control" rows="3" placeholder="Nội dung tóm tắt kiến thức của môn học..."></textarea>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 0.85rem; margin-top: 1.75rem;">
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
           <button type="button" class="btn btn-secondary" onclick="closeCourseModal()">Hủy</button>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> Lưu Học Phần</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu Học Phần</button>
         </div>
       </form>
     </div>
   </div>
 
-  <script src="/js/cosmic-stars.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/admin.js"></script>
 </body>

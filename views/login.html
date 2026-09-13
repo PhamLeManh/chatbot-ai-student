@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cổng Đăng Nhập Vũ Trụ - AI Student Cosmos</title>
+  <title>Đăng Nhập - Trường Đại Học Nguyễn Trãi (NTU)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 
-  <!-- CANVAS NỀN VŨ TRỤ -->
-  <canvas id="cosmic-canvas"></canvas>
-
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="/" class="nav-brand">
       <div class="brand-icon">
-        <i class="fas fa-meteor"></i>
+        <i class="fas fa-graduation-cap"></i>
       </div>
-      <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+      <span>Đại Học <span style="font-weight: 800;">Nguyễn Trãi</span></span>
     </a>
 
     <div class="nav-actions">
-      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Không gian / Cực quang">
+      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Sáng / Tối">
         <i class="fas fa-sun"></i>
       </button>
-      <a href="/register" class="btn btn-secondary btn-sm"><i class="fas fa-user-astronaut"></i> Đăng Ký Tài Khoản</a>
+      <a href="/register" class="btn btn-secondary btn-sm"><i class="fas fa-user-plus"></i> Đăng Ký Tài Khoản</a>
     </div>
   </nav>
 
@@ -35,43 +32,43 @@
     <div class="auth-card">
       <div class="auth-header">
         <div class="auth-brand-icon">
-          <i class="fas fa-user-astronaut"></i>
+          <i class="fas fa-user-check"></i>
         </div>
         <h2 class="auth-title">Chào Mừng Trở Lại!</h2>
-        <p class="auth-subtitle">Đăng nhập vào Trạm Vũ Trụ AI để tiếp tục hành trình học tập</p>
+        <p class="auth-subtitle">Đăng nhập vào hệ thống AI Assistant - Đại Học Nguyễn Trãi</p>
       </div>
 
-      <!-- 1-Click Demo Quantum Passkeys -->
+      <!-- 1-Click Demo Quick Passkeys -->
       <div class="demo-accounts-box">
         <div class="demo-title">
-          <i class="fas fa-bolt"></i> Trải Nghiệm Nhanh 1-Click Demo Passkey
+          <i class="fas fa-bolt"></i> Trải Nghiệm Nhanh 1-Click Demo
         </div>
         <div class="demo-buttons-grid">
           <button type="button" class="btn-demo" onclick="quickDemoLogin('student')">
-            <i class="fas fa-user-graduate" style="color: var(--cosmic-cyan-glow);"></i> Sinh Viên Demo
+            <i class="fas fa-user-graduate"></i> Sinh Viên Demo
           </button>
           <button type="button" class="btn-demo" onclick="quickDemoLogin('admin')">
-            <i class="fas fa-shield-halved" style="color: var(--cosmic-pink);"></i> Quản Trị Demo
+            <i class="fas fa-shield-alt"></i> Quản Trị Demo
           </button>
         </div>
       </div>
 
       <div class="auth-divider">
-        <span>HOẶC ĐĂNG NHẬP BẰNG TÀI KHOẢN</span>
+        <span>HOẶC ĐĂNG NHẬP BẰNG EMAIL</span>
       </div>
 
       <!-- Login Form -->
       <form id="login-form">
         <div class="form-group">
-          <label class="form-label" for="email">Địa Chỉ Email Không Gian</label>
+          <label class="form-label" for="email">Địa Chỉ Email</label>
           <div class="input-with-icon">
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" id="email" class="form-control" placeholder="vidu: student@demo.com" required autocomplete="email">
+            <input type="email" id="email" class="form-control" placeholder="sinhvien@demo.com" required autocomplete="email">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="password">Mật Khẩu Lượng Tử</label>
+          <label class="form-label" for="password">Mật Khẩu</label>
           <div class="input-with-icon">
             <i class="fas fa-lock input-icon"></i>
             <input type="password" id="password" class="form-control" placeholder="Nhập mật khẩu..." required autocomplete="current-password">
@@ -81,23 +78,22 @@
 
         <div class="form-options">
           <label class="checkbox-label">
-            <input type="checkbox" checked style="accent-color: var(--cosmic-violet);">
-            <span>Ghi nhớ phiên đăng nhập</span>
+            <input type="checkbox" checked style="accent-color: var(--text-main);">
+            <span>Ghi nhớ đăng nhập</span>
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
-          Khởi Động Trạm Học Tập <i class="fas fa-arrow-right"></i>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 0.95rem;">
+          Đăng Nhập <i class="fas fa-arrow-right"></i>
         </button>
       </form>
 
       <div class="auth-footer">
-        Chưa có tài khoản? <a href="/register">Tạo tài khoản phi hành gia mới</a>
+        Chưa có tài khoản? <a href="/register">Tạo tài khoản sinh viên mới</a>
       </div>
     </div>
   </div>
 
-  <script src="/js/cosmic-stars.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/auth.js"></script>
 </body>

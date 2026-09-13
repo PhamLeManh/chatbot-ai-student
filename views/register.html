@@ -3,58 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng Ký Tài Khoản Phi Hành Gia Sinh Viên - AI Student Cosmos</title>
+  <title>Đăng Ký Tài Khoản - Trường Đại Học Nguyễn Trãi (NTU)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 
-  <!-- CANVAS NỀN VŨ TRỤ -->
-  <canvas id="cosmic-canvas"></canvas>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="/" class="nav-brand">
       <div class="brand-icon">
-        <i class="fas fa-meteor"></i>
+        <i class="fas fa-graduation-cap"></i>
       </div>
-      <span>AI Student <span style="color: var(--cosmic-cyan-glow);">Cosmos</span></span>
+      <span>Đại Học <span style="font-weight: 800;">Nguyễn Trãi</span></span>
     </a>
 
     <div class="nav-actions">
-      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Không gian / Cực quang">
+      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Sáng / Tối">
         <i class="fas fa-sun"></i>
       </button>
-      <a href="/login" class="btn btn-secondary btn-sm"><i class="fas fa-right-to-bracket"></i> Đã có tài khoản? Đăng Nhập</a>
+      <a href="/login" class="btn btn-secondary btn-sm"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</a>
     </div>
   </nav>
 
   <!-- AUTH WRAPPER -->
   <div class="auth-wrapper">
-    <div class="auth-card" style="max-width: 550px;">
+    <div class="auth-card" style="max-width: 540px;">
       <div class="auth-header">
         <div class="auth-brand-icon">
           <i class="fas fa-user-plus"></i>
         </div>
         <h2 class="auth-title">Đăng Ký Tài Khoản</h2>
-        <p class="auth-subtitle">Tạo tài khoản phi hành gia học tập cá nhân hóa miễn phí cùng AI</p>
+        <p class="auth-subtitle">Tạo tài khoản học tập & tư vấn trực tuyến cùng AI NTU</p>
       </div>
 
       <!-- 1-Click Demo Quick Note -->
       <div class="demo-accounts-box">
         <div class="demo-title">
-          <i class="fas fa-circle-info"></i> Bạn muốn trải nghiệm nhanh không cần điền thông tin?
+          <i class="fas fa-info-circle"></i> Trải nghiệm nhanh không cần điền thông tin?
         </div>
         <button type="button" class="btn btn-secondary btn-sm" style="width: 100%;" onclick="quickDemoLogin('student')">
-          <i class="fas fa-bolt" style="color: var(--cosmic-cyan-glow);"></i> Nhấn Vào Đây Để Đăng Nhập Demo Ngay
+          <i class="fas fa-bolt"></i> Nhấn Vào Đây Để Đăng Nhập Demo Sinh Viên Ngay
         </button>
       </div>
 
       <!-- Register Form -->
       <form id="register-form">
         <div class="form-group">
-          <label class="form-label" for="name">Họ và Tên <span style="color: var(--accent);">*</span></label>
+          <label class="form-label" for="name">Họ và Tên <span style="color: var(--danger);">*</span></label>
           <div class="input-with-icon">
             <i class="fas fa-user input-icon"></i>
             <input type="text" id="name" class="form-control" placeholder="Nguyễn Văn A" required>
@@ -62,10 +60,10 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="email">Địa Chỉ Email <span style="color: var(--accent);">*</span></label>
+          <label class="form-label" for="email">Địa Chỉ Email <span style="color: var(--danger);">*</span></label>
           <div class="input-with-icon">
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" id="email" class="form-control" placeholder="sinhvien@daihoc.edu.vn" required>
+            <input type="email" id="email" class="form-control" placeholder="sinhvien@ntu.edu.vn" required>
           </div>
         </div>
 
@@ -74,30 +72,38 @@
             <label class="form-label" for="studentId">Mã Số Sinh Viên (MSSV)</label>
             <div class="input-with-icon">
               <i class="fas fa-id-card input-icon"></i>
-              <input type="text" id="studentId" class="form-control" placeholder="20261234">
+              <input type="text" id="studentId" class="form-control" placeholder="2026NTU1234">
             </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="major">Chuyên Ngành Học</label>
-            <div class="input-with-icon">
-              <i class="fas fa-laptop-code input-icon"></i>
-              <input type="text" id="major" class="form-control" placeholder="Công nghệ thông tin / AI">
-            </div>
+            <label class="form-label" for="major">Ngành Đào Tạo NTU <span style="color: var(--danger);">*</span></label>
+            <select id="major" class="form-control" required style="padding-left: 1rem;">
+              <option value="Thiết kế đồ họa">1. Thiết kế đồ họa</option>
+              <option value="Ngôn ngữ Nhật">2. Ngôn ngữ Nhật</option>
+              <option value="Ngôn ngữ Hàn Quốc">3. Ngôn ngữ Hàn Quốc</option>
+              <option value="Quốc tế học">4. Quốc tế học</option>
+              <option value="Quan hệ công chúng">5. Quan hệ công chúng</option>
+              <option value="Quản trị kinh doanh">6. Quản trị kinh doanh</option>
+              <option value="Tài chính – Ngân hàng">7. Tài chính – Ngân hàng</option>
+              <option value="Kế toán">8. Kế toán</option>
+              <option value="Công nghệ thông tin" selected>9. Công nghệ thông tin</option>
+              <option value="Thiết kế nội thất">10. Thiết kế nội thất</option>
+            </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="university">Trường Đại Học / Viện Đào Tạo</label>
+          <label class="form-label" for="university">Trường Đại Học</label>
           <div class="input-with-icon">
-            <i class="fas fa-building-columns input-icon"></i>
-            <input type="text" id="university" class="form-control" placeholder="ĐH Bách Khoa / ĐH Quốc Gia">
+            <i class="fas fa-university input-icon"></i>
+            <input type="text" id="university" class="form-control" value="Trường Đại học Nguyễn Trãi (NTU)">
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
-            <label class="form-label" for="password">Mật Khẩu <span style="color: var(--accent);">*</span></label>
+            <label class="form-label" for="password">Mật Khẩu <span style="color: var(--danger);">*</span></label>
             <div class="input-with-icon">
               <i class="fas fa-lock input-icon"></i>
               <input type="password" id="password" class="form-control" placeholder="Tối thiểu 6 ký tự" minlength="6" required>
@@ -106,16 +112,16 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="confirmPassword">Nhập Lại Mật Khẩu <span style="color: var(--accent);">*</span></label>
+            <label class="form-label" for="confirmPassword">Xác Nhận Mật Khẩu <span style="color: var(--danger);">*</span></label>
             <div class="input-with-icon">
-              <i class="fas fa-shield-halved input-icon"></i>
-              <input type="password" id="confirmPassword" class="form-control" placeholder="Khớp mật khẩu trên" minlength="6" required>
+              <i class="fas fa-shield-alt input-icon"></i>
+              <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" minlength="6" required>
             </div>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; margin-top: 0.5rem;">
-          Tạo Tài Khoản Vũ Trụ <i class="fas fa-user-plus"></i>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
+          Đăng Ký Tài Khoản NTU <i class="fas fa-arrow-right"></i>
         </button>
       </form>
 
@@ -125,7 +131,6 @@
     </div>
   </div>
 
-  <script src="/js/cosmic-stars.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/auth.js"></script>
 </body>

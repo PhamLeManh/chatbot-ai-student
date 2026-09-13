@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
     university: {
       type: String,
       trim: true,
-      default: 'Đại học Bách Khoa / ĐHQG',
+      default: 'Trường Đại học Nguyễn Trãi (NTU)',
     },
     major: {
       type: String,
