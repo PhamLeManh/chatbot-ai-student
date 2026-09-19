@@ -29,7 +29,8 @@
 
   <!-- AUTH WRAPPER -->
   <div class="auth-wrapper">
-    <div class="auth-card">
+    <!-- LOGIN CARD -->
+    <div class="auth-card" id="login-card">
       <div class="auth-header">
         <div class="auth-brand-icon">
           <i class="fas fa-user-check"></i>
@@ -63,7 +64,7 @@
           <label class="form-label" for="email">Địa Chỉ Email</label>
           <div class="input-with-icon">
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" id="email" class="form-control" placeholder="sinhvien@demo.com" required autocomplete="email">
+            <input type="email" id="email" class="form-control" placeholder="sinhvien@gmail.com" required autocomplete="email">
           </div>
         </div>
 
@@ -83,13 +84,58 @@
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 0.95rem;">
+        <button type="submit" class="btn btn-primary" id="login-submit-btn" style="width: 100%; padding: 0.8rem; font-size: 0.95rem;">
           Đăng Nhập <i class="fas fa-arrow-right"></i>
         </button>
       </form>
 
       <div class="auth-footer">
         Chưa có tài khoản? <a href="/register">Tạo tài khoản sinh viên mới</a>
+      </div>
+    </div>
+
+    <!-- OTP VERIFICATION MODAL ON LOGIN (If unverified) -->
+    <div class="auth-card" id="login-otp-card" style="display: none; max-width: 480px;">
+      <div class="auth-header">
+        <div class="auth-brand-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+          <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <h2 class="auth-title">Xác Minh Tài Khoản</h2>
+        <p class="auth-subtitle">
+          Tài khoản của bạn chưa được xác minh qua Email.<br>
+          Vui lòng nhập mã OTP đã gửi tới <strong id="login-unverified-email" style="color: var(--text-main);"></strong>
+        </p>
+      </div>
+
+      <form id="login-otp-form">
+        <div class="form-group" style="text-align: center;">
+          <label class="form-label" for="login-otp-input" style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+            Nhập Mã Xác Minh (6 Chữ Số)
+          </label>
+          <input 
+            type="text" 
+            id="login-otp-input" 
+            class="form-control" 
+            placeholder="______" 
+            maxlength="6" 
+            required 
+            style="text-align: center; font-size: 1.8rem; letter-spacing: 8px; font-family: monospace; font-weight: 800; padding: 0.6rem;"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="login-verify-btn" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
+          <i class="fas fa-check-circle"></i> Xác Minh & Đăng Nhập Ngay
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="handleLoginResendOTP()">
+          <i class="fas fa-redo"></i> Gửi Lại Mã OTP Mới
+        </button>
+      </div>
+
+      <div class="auth-footer" style="margin-top: 1rem;">
+        <a href="#" onclick="backToLoginForm(event)"><i class="fas fa-arrow-left"></i> Quay lại form đăng nhập</a>
       </div>
     </div>
   </div>

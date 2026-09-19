@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xác Minh Tài Khoản - Trường Đại Học Nguyễn Trãi (NTU)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <span>Đại Học <span style="font-weight: 800;">Nguyễn Trãi</span></span>
+    </a>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Chuyển đổi giao diện Sáng / Tối">
+        <i class="fas fa-sun"></i>
+      </button>
+      <a href="/login" class="btn btn-secondary btn-sm"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</a>
+    </div>
+  </nav>
+
+  <!-- AUTH WRAPPER -->
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 480px; text-align: center;">
+      
+      <!-- Loading State -->
+      <div id="verify-loading" style="padding: 2rem 1rem;">
+        <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Đang Xác Minh Tài Khoản...</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Vui lòng đợi giây lát trong khi hệ thống xác thực token của bạn.</p>
+      </div>
+
+      <!-- Success State -->
+      <div id="verify-success" style="display: none; padding: 2rem 1rem;">
+        <div style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; color: #22c55e;">Xác Minh Thành Công!</h2>
+        <p id="success-msg" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+          Tài khoản sinh viên NTU của bạn đã được kích hoạt thành công.
+        </p>
+        <a href="/chat" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+          <i class="fas fa-comments"></i> Bắt Đầu Trò Chuyện Cùng AI NTU
+        </a>
+      </div>
+
+      <!-- Error State -->
+      <div id="verify-error" style="display: none; padding: 2rem 1rem;">
+        <div style="font-size: 3.5rem; color: #ef4444; margin-bottom: 1rem;">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; color: #ef4444;">Xác Minh Thất Bại</h2>
+        <p id="error-msg" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+          Liên kết xác minh không hợp lệ hoặc đã hết hạn.
+        </p>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+          <a href="/register" class="btn btn-secondary">
+            <i class="fas fa-user-plus"></i> Đăng Ký Lại
+          </a>
+          <a href="/login" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Về Đăng Nhập
+          </a>
+        </div>
+      </div>
+
+      <!-- Manual OTP Fallback Input -->
+      <div id="manual-otp-section" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+          Bạn có mã OTP 6 số trong email? Nhập tại đây:
+        </p>
+        <div style="display: flex; gap: 0.5rem; max-width: 320px; margin: 0 auto;">
+          <input type="text" id="manual-email" class="form-control" placeholder="Email..." style="font-size: 0.85rem; flex: 1;">
+          <input type="text" id="manual-otp" class="form-control" placeholder="6 số OTP" maxlength="6" style="font-size: 0.85rem; width: 90px; text-align: center; letter-spacing: 2px;">
+          <button type="button" class="btn btn-primary btn-sm" onclick="handleManualVerify()">
+            <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+
+      if (!token) {
+        document.getElementById('verify-loading').style.display = 'none';
+        document.getElementById('verify-error').style.display = 'block';
+        document.getElementById('error-msg').innerText = 'Không tìm thấy token xác minh trong đường dẫn.';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/auth/verify-email?token=${encodeURIComponent(token)}`);
+        const result = await response.json();
+
+        document.getElementById('verify-loading').style.display = 'none';
+
+        if (result.success) {
+          document.getElementById('verify-success').style.display = 'block';
+          if (result.data && result.data.token && result.data.user) {
+            setAuthSession(result.data.token, result.data.user);
+          }
+          showToast('Xác thực tài khoản thành công! Đang chuyển hướng...', 'success');
+          setTimeout(() => {
+            window.location.href = '/chat';
+          }, 2000);
+        } else {
+          document.getElementById('verify-error').style.display = 'block';
+          document.getElementById('error-msg').innerText = result.message || 'Xác thực không thành công.';
+        }
+      } catch (err) {
+        document.getElementById('verify-loading').style.display = 'none';
+        document.getElementById('verify-error').style.display = 'block';
+        document.getElementById('error-msg').innerText = err.message || 'Lỗi kết nối máy chủ.';
+      }
+    });
+
+    async function handleManualVerify() {
+      const email = document.getElementById('manual-email').value.trim();
+      const otp = document.getElementById('manual-otp').value.trim();
+
+      if (!email || !otp || otp.length !== 6) {
+        showToast('Vui lòng nhập đầy đủ email và mã OTP 6 số!', 'warning');
+        return;
+      }
+
+      try {
+        const result = await fetchAPI('/api/auth/verify-otp', {
+          method: 'POST',
+          body: JSON.stringify({ email, otp }),
+        });
+
+        setAuthSession(result.data.token, result.data.user);
+        showToast('Xác thực thành công!', 'success');
+        document.getElementById('verify-loading').style.display = 'none';
+        document.getElementById('verify-error').style.display = 'none';
+        document.getElementById('verify-success').style.display = 'block';
+        setTimeout(() => {
+          window.location.href = '/chat';
+        }, 1500);
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

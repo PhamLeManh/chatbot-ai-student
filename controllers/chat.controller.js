@@ -35,26 +35,19 @@ class ChatController {
   // GET /api/chat/quick-prompts
   async getQuickPrompts(req, res) {
     const quickPrompts = [
-      // 1. THIẾT KẾ ĐỒ HỌA
-      { id: 'graphic-design', category: 'Thiết kế đồ họa', icon: 'fa-palette', title: 'Nguyên lý CRAP & Thiết kế', prompt: 'Hãy giải thích 4 nguyên lý thiết kế CRAP (Contrast, Repetition, Alignment, Proximity) và cách xây dựng bộ nhận diện thương hiệu chuyên nghiệp tại NTU.' },
-      // 2. NGÔN NGỮ NHẬT
-      { id: 'japanese-jlpt', category: 'Ngôn ngữ Nhật', icon: 'fa-torii-gate', title: 'Lộ trình JLPT N3-N1', prompt: 'Hãy chia sẻ lộ trình học tiếng Nhật từ sơ cấp đến chuẩn JLPT N3-N1 cho sinh viên ngành Ngôn ngữ Nhật Đại học Nguyễn Trãi.' },
-      // 3. NGÔN NGỮ HÀN QUỐC
-      { id: 'korean-topik', category: 'Ngôn ngữ Hàn Quốc', icon: 'fa-globe-asia', title: 'Ôn thi TOPIK & DN Hàn', prompt: 'Hướng dẫn phương pháp ôn thi TOPIK đạt cấp độ 4-6 và các kỹ năng làm việc tại tập đoàn Hàn Quốc (Samsung, LG, CJ) cho sinh viên NTU.' },
-      // 4. QUỐC TẾ HỌC
-      { id: 'international-studies', category: 'Quốc tế học', icon: 'fa-earth-americas', title: 'Ngoại giao & Dự án NGO', prompt: 'Tư vấn về cơ hội nghề nghiệp ngành Quốc tế học tại Đại học Nguyễn Trãi: làm việc tại các cơ quan ngoại giao, tổ chức phi chính phủ (NGO) và tập đoàn quốc tế.' },
-      // 5. QUAN HỆ CÔNG CHÚNG
-      { id: 'pr-crisis', category: 'Quan hệ công chúng', icon: 'fa-bullhorn', title: 'Xử lý khủng hoảng PR', prompt: 'Trình bày quy trình 5 bước xử lý khủng hoảng truyền thông mạng xã hội và kỹ năng viết thông cáo báo chí chuẩn ngành Quan hệ công chúng.' },
-      // 6. QUẢN TRỊ KINH DOANH
-      { id: 'business-admin', category: 'Quản trị kinh doanh', icon: 'fa-briefcase', title: 'SWOT & Vườn ươm Startup', prompt: "Hướng dẫn phân tích ma trận SWOT và mô hình 5 áp lực cạnh tranh của Porter cho dự án khởi nghiệp sinh viên Quản trị kinh doanh NTU." },
-      // 7. TÀI CHÍNH - NGÂN HÀNG
-      { id: 'finance-banking', category: 'Tài chính – Ngân hàng', icon: 'fa-chart-line', title: 'Ngân hàng số & Fintech', prompt: 'Giải thích xu hướng Ngân hàng số (Digital Banking), Công nghệ tài chính (Fintech) và công thức tính giá trị hiện tại (PV) của dòng tiền.' },
-      // 8. KẾ TOÁN
-      { id: 'accounting-basics', category: 'Kế toán', icon: 'fa-file-invoice-dollar', title: 'Định khoản Nợ - Có & IFRS', prompt: 'Giải thích nguyên tắc định khoản kế toán Nợ - Có (Debit/Credit) với ví dụ thực tế doanh nghiệp và xu hướng áp dụng chuẩn mực IFRS.' },
-      // 9. CÔNG NGHỆ THÔNG TIN
-      { id: 'it-coding', category: 'Công nghệ thông tin', icon: 'fa-laptop-code', title: 'Thuật toán & Lập trình Fullstack', prompt: 'Giải thích thuật toán QuickSort và phân tích kiến trúc xây dựng ứng dụng Web Fullstack chuẩn bảo mật dành cho sinh viên CNTT NTU.' },
-      // 10. THIẾT KẾ NỘI THẤT
-      { id: 'interior-design', category: 'Thiết kế nội thất', icon: 'fa-couch', title: 'Phong cách nội thất & Bản vẽ', prompt: 'So sánh phong cách thiết kế nội thất Minimalism, Japandi và Scandinavian, cùng quy chuẩn đọc bản vẽ mặt bằng/mặt cắt kiến trúc.' },
+      // Kiến thức tổng quát & Kỹ năng
+      { id: 'coding-python', category: 'Lập trình', icon: 'fa-code', title: 'Viết code & Thuật toán', prompt: 'Hãy viết một hàm giải thuật toán tìm đường đi ngắn nhất Dijkstra và giải thích từng dòng code chi tiết.' },
+      { id: 'math-calc', category: 'Toán học', icon: 'fa-square-root-variable', title: 'Giải toán & Công thức', prompt: 'Giải thích ý nghĩa của đạo hàm, tích phân và ứng dụng trong các bài toán tối ưu hóa thực tế.' },
+      { id: 'english-ielts', category: 'Ngoại ngữ', icon: 'fa-language', title: 'Luyện dịch & Ngoại ngữ', prompt: 'Dịch đoạn văn sau sang tiếng Anh học thuật và chỉ ra 3 cấu trúc ngữ pháp nâng cao hữu ích.' },
+      { id: 'study-tips', category: 'Phương pháp học', icon: 'fa-lightbulb', title: 'Bí quyết Pomodoro & Ôn thi', prompt: 'Hướng dẫn phương pháp Active Recall và Spaced Repetition để ôn thi đạt điểm A+ trong 2 tuần.' },
+      
+      // 10 Ngành Đào tạo NTU
+      { id: 'graphic-design', category: 'Thiết kế đồ họa', icon: 'fa-palette', title: 'Nguyên lý CRAP & Thiết kế', prompt: 'Hãy giải thích 4 nguyên lý thiết kế CRAP (Contrast, Repetition, Alignment, Proximity) và cách xây dựng bộ nhận diện thương hiệu chuyên nghiệp.' },
+      { id: 'it-coding', category: 'Công nghệ thông tin', icon: 'fa-laptop-code', title: 'Công nghệ thông tin & AI', prompt: 'Tư vấn lộ trình học lập trình Web Fullstack và các kiến thức nền tảng về Trí tuệ nhân tạo (AI/ML) tại NTU.' },
+      { id: 'business-admin', category: 'Quản trị kinh doanh', icon: 'fa-briefcase', title: 'Quản trị kinh doanh & Startup', prompt: 'Hướng dẫn phân tích ma trận SWOT và mô hình Canvas cho dự án khởi nghiệp đổi mới sáng tạo.' },
+      { id: 'finance-banking', category: 'Tài chính – Ngân hàng', icon: 'fa-chart-line', title: 'Ngân hàng số & Fintech', prompt: 'Giải thích xu hướng Ngân hàng số (Digital Banking), Công nghệ tài chính (Fintech) và thẩm định dự án đầu tư.' },
+      { id: 'japanese-jlpt', category: 'Ngôn ngữ Nhật', icon: 'fa-torii-gate', title: 'Ngôn ngữ Nhật & JLPT', prompt: 'Chia sẻ lộ trình học tiếng Nhật thương mại và chuẩn bị thi chứng chỉ JLPT N3-N2.' },
+      { id: 'korean-topik', category: 'Ngôn ngữ Hàn Quốc', icon: 'fa-globe-asia', title: 'Ngôn ngữ Hàn & TOPIK', prompt: 'Hướng dẫn phương pháp ôn thi TOPIK 4-6 và kỹ năng biên phiên dịch cho doanh nghiệp Hàn Quốc.' },
     ];
 
     return successResponse(res, 'Lấy danh sách gợi ý câu hỏi thành công.', quickPrompts);
@@ -63,7 +56,7 @@ class ChatController {
   // PUT /api/chat/messages/:id/feedback
   async giveFeedback(req, res, next) {
     try {
-      const { feedback } = req.body; // 'like', 'dislike', 'none'
+      const { feedback } = req.body;
       const message = await Message.findByIdAndUpdate(
         req.params.id,
         { feedback },

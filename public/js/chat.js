@@ -704,10 +704,10 @@ function getWelcomeMessageHtml() {
       </span>
 
       <h2 style="font-family: var(--font-display); font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
-        Xin chào, ${user ? user.name : 'Sinh Viên / Thí Sinh NTU'}!
+        Xin chào, ${user ? user.name : 'Sinh Viên NTU'}!
       </h2>
       <p style="color: var(--text-muted); font-size: 0.98rem; margin-bottom: 1.5rem; line-height: 1.6;">
-        Mình là <strong>Trợ lý AI Đại học Nguyễn Trãi</strong>. Hãy chọn ngành bạn quan tâm để nhận tư vấn tuyển sinh hoặc đặt câu hỏi học tập chuyên sâu:
+        Mình là <strong>Trợ lý AI Cố Vấn Học Tập NTU</strong>. Mình sẵn sàng giải đáp bài tập, viết code, dịch thuật, giải toán hoặc cố vấn chuyên sâu 10 ngành đào tạo tại Đại học Nguyễn Trãi:
       </p>
 
       <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
@@ -715,7 +715,7 @@ function getWelcomeMessageHtml() {
       </div>
 
       <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.8rem; color: var(--text-dim);">
-        <i class="fas fa-info-circle"></i> Bạn cũng có thể đính kèm slide/tài liệu ôn tập hoặc đặt câu hỏi giải bài tập bất kỳ!
+        <i class="fas fa-info-circle"></i> Bạn có thể hỏi bất kỳ câu hỏi kiến thức nào, đính kèm slide/đề cương hoặc yêu cầu lập lộ trình ôn thi!
       </div>
     </div>
   `;

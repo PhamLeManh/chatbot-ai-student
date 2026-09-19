@@ -18,16 +18,27 @@ const getOpenAIClient = () => {
   return null;
 };
 
+const getGeminiApiKey = () => {
+  const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  return key && key.trim() !== '' ? key.trim() : null;
+};
+
 const aiConfig = {
-  model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+  openaiModel: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
   temperature: 0.7,
-  max_tokens: 2000,
+  max_tokens: 2048,
   isAIConfigured: () => {
-    return Boolean(process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim() !== '');
+    return Boolean(
+      (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim() !== '') ||
+      (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() !== '') ||
+      (process.env.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY.trim() !== '')
+    );
   }
 };
 
 module.exports = {
   getOpenAIClient,
+  getGeminiApiKey,
   aiConfig
 };

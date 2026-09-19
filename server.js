@@ -30,8 +30,12 @@ async function seedInitialData() {
         major: 'Quản trị Hệ thống & AI',
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
         bio: 'Quản trị viên trưởng hệ thống AI Assistant - Trường Đại học Nguyễn Trãi.',
+        isVerified: true,
       });
       console.log('[Seed] Đã tạo tài khoản Admin demo NTU (admin@demo.com / password123)');
+    } else if (!admin.isVerified) {
+      admin.isVerified = true;
+      await admin.save();
     }
 
     // 2. Kiểm tra & Tạo tài khoản Sinh viên mặc định
@@ -48,8 +52,12 @@ async function seedInitialData() {
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
         bio: 'Sinh viên NTU năng động, mục tiêu tốt nghiệp loại Giỏi và làm việc tại tập đoàn đa quốc gia!',
         streak: { currentCount: 7, longestStreak: 15, lastActiveDate: new Date() },
+        isVerified: true,
       });
       console.log('[Seed] Đã tạo tài khoản Sinh viên demo NTU (student@demo.com / password123)');
+    } else if (!student.isVerified) {
+      student.isVerified = true;
+      await student.save();
     }
 
     // 3. Kiểm tra & Tạo danh sách 10 Môn học đại diện cho 10 ngành đào tạo tại NTU
@@ -204,7 +212,7 @@ async function seedInitialData() {
         const sampleConv = await Conversation.create({
           userId: student._id,
           title: 'Tư vấn 10 ngành đào tạo Đại học Nguyễn Trãi',
-          subject: 'Tư vấn Tuyển sinh & Học thuật NTU',
+          subject: 'Cố vấn Học thuật 10 Ngành NTU',
           lastMessagePreview: 'Trường Đại học Nguyễn Trãi đào tạo 10 ngành trọng điểm chuẩn ứng dụng quốc tế...',
           messageCount: 2,
         });

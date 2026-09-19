@@ -10,7 +10,6 @@
 </head>
 <body>
 
-
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="/" class="nav-brand">
@@ -30,29 +29,30 @@
 
   <!-- AUTH WRAPPER -->
   <div class="auth-wrapper">
-    <div class="auth-card" style="max-width: 540px;">
+    <!-- REGISTER CARD -->
+    <div class="auth-card" id="register-card" style="max-width: 540px;">
       <div class="auth-header">
         <div class="auth-brand-icon">
           <i class="fas fa-user-plus"></i>
         </div>
-        <h2 class="auth-title">Đăng Ký Tài Khoản</h2>
-        <p class="auth-subtitle">Tạo tài khoản học tập & tư vấn trực tuyến cùng AI NTU</p>
+        <h2 class="auth-title">Đăng Ký Tài Khoản NTU</h2>
+        <p class="auth-subtitle">Tạo tài khoản học tập & cố vấn học thuật trực tuyến cùng AI</p>
       </div>
 
       <!-- 1-Click Demo Quick Note -->
       <div class="demo-accounts-box">
         <div class="demo-title">
-          <i class="fas fa-info-circle"></i> Trải nghiệm nhanh không cần điền thông tin?
+          <i class="fas fa-bolt"></i> Trải nghiệm nhanh không cần điền thông tin?
         </div>
         <button type="button" class="btn btn-secondary btn-sm" style="width: 100%;" onclick="quickDemoLogin('student')">
-          <i class="fas fa-bolt"></i> Nhấn Vào Đây Để Đăng Nhập Demo Sinh Viên Ngay
+          <i class="fas fa-user-graduate"></i> Nhấn Vào Đây Để Đăng Nhập Demo Sinh Viên Ngay
         </button>
       </div>
 
       <!-- Register Form -->
       <form id="register-form">
         <div class="form-group">
-          <label class="form-label" for="name">Họ và Tên <span style="color: var(--danger);">*</span></label>
+          <label class="form-label" for="name">Họ và Tên Sinh Viên <span style="color: var(--danger);">*</span></label>
           <div class="input-with-icon">
             <i class="fas fa-user input-icon"></i>
             <input type="text" id="name" class="form-control" placeholder="Nguyễn Văn A" required>
@@ -60,10 +60,10 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="email">Địa Chỉ Email <span style="color: var(--danger);">*</span></label>
+          <label class="form-label" for="email">Địa Chỉ Email (Gmail / Email NTU) <span style="color: var(--danger);">*</span></label>
           <div class="input-with-icon">
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" id="email" class="form-control" placeholder="sinhvien@ntu.edu.vn" required>
+            <input type="email" id="email" class="form-control" placeholder="sinhvien@gmail.com" required autocomplete="email">
           </div>
         </div>
 
@@ -106,7 +106,7 @@
             <label class="form-label" for="password">Mật Khẩu <span style="color: var(--danger);">*</span></label>
             <div class="input-with-icon">
               <i class="fas fa-lock input-icon"></i>
-              <input type="password" id="password" class="form-control" placeholder="Tối thiểu 6 ký tự" minlength="6" required>
+              <input type="password" id="password" class="form-control" placeholder="Tối thiểu 6 ký tự" minlength="6" required autocomplete="new-password">
               <span class="password-toggle"><i class="fas fa-eye"></i></span>
             </div>
           </div>
@@ -115,18 +115,74 @@
             <label class="form-label" for="confirmPassword">Xác Nhận Mật Khẩu <span style="color: var(--danger);">*</span></label>
             <div class="input-with-icon">
               <i class="fas fa-shield-alt input-icon"></i>
-              <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" minlength="6" required>
+              <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" minlength="6" required autocomplete="new-password">
             </div>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
-          Đăng Ký Tài Khoản NTU <i class="fas fa-arrow-right"></i>
+        <button type="submit" class="btn btn-primary" id="register-submit-btn" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
+          Tiếp Tục Đăng Ký & Nhận Mã OTP <i class="fas fa-arrow-right"></i>
         </button>
       </form>
 
       <div class="auth-footer">
         Đã có tài khoản? <a href="/login">Đăng nhập tại đây</a>
+      </div>
+    </div>
+
+    <!-- OTP VERIFICATION STEP CARD (Hidden by default) -->
+    <div class="auth-card" id="otp-card" style="max-width: 480px; display: none;">
+      <div class="auth-header">
+        <div class="auth-brand-icon" style="background: rgba(59, 130, 246, 0.15); color: var(--primary);">
+          <i class="fas fa-envelope-open-text"></i>
+        </div>
+        <h2 class="auth-title">Xác Minh Email Của Bạn</h2>
+        <p class="auth-subtitle">
+          Mã xác thực 6 số (OTP) đã được gửi tới email:<br>
+          <strong id="otp-target-email" style="color: var(--text-main);">email@gmail.com</strong>
+        </p>
+      </div>
+
+      <div id="dev-otp-box" style="display: none; background: rgba(34, 197, 94, 0.1); border: 1px dashed #22c55e; border-radius: 8px; padding: 12px; margin-bottom: 1rem; text-align: center;">
+        <span style="font-size: 0.8rem; color: #4ade80; font-weight: 600;">Mã OTP Kiểm Thử Nhanh: </span>
+        <strong id="dev-otp-code" style="font-size: 1.2rem; color: #22c55e; letter-spacing: 3px; font-family: monospace;">123456</strong>
+        <button type="button" class="btn btn-secondary btn-sm" style="margin-left: 8px; padding: 2px 8px; font-size: 0.75rem;" onclick="fillDevOtp()">Tự điền</button>
+      </div>
+
+      <form id="otp-form">
+        <div class="form-group" style="text-align: center;">
+          <label class="form-label" for="otp-input" style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+            Nhập Mã Xác Minh (6 Chữ Số)
+          </label>
+          <input 
+            type="text" 
+            id="otp-input" 
+            class="form-control" 
+            placeholder="______" 
+            maxlength="6" 
+            required 
+            style="text-align: center; font-size: 1.8rem; letter-spacing: 8px; font-family: monospace; font-weight: 800; padding: 0.6rem;"
+            autocomplete="one-time-code"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="verify-otp-btn" style="width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
+          <i class="fas fa-check-circle"></i> Kích Hoạt Tài Khoản NTU
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+          Chưa nhận được mã?
+        </p>
+        <button type="button" class="btn btn-secondary btn-sm" id="resend-otp-btn" onclick="handleResendOTP()">
+          <i class="fas fa-redo"></i> Gửi Lại Mã OTP
+        </button>
+        <span id="resend-timer" style="display: none; font-size: 0.8rem; color: var(--text-dim); margin-left: 0.5rem;">(60s)</span>
+      </div>
+
+      <div class="auth-footer" style="margin-top: 1rem;">
+        <a href="#" onclick="backToRegisterForm(event)"><i class="fas fa-arrow-left"></i> Quay lại sửa thông tin email</a>
       </div>
     </div>
   </div>

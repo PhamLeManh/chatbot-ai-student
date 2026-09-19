@@ -3,6 +3,13 @@ const { successResponse, errorResponse } = require('../utils/response');
 const { validateRegisterInput, validateLoginInput } = require('../utils/validators');
 
 class AuthController {
+  // Helper lấy base URL của request
+  getBaseUrl(req) {
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    return `${protocol}://${host}`;
+  }
+
   // POST /api/auth/register
   async register(req, res, next) {
     try {
@@ -11,8 +18,55 @@ class AuthController {
         return errorResponse(res, 'Dữ liệu đăng ký không hợp lệ.', errors, 400);
       }
 
-      const result = await authService.register(req.body);
-      return successResponse(res, 'Đăng ký tài khoản thành công!', result, 201);
+      const baseUrl = this.getBaseUrl(req);
+      const result = await authService.register(req.body, baseUrl);
+      return successResponse(res, result.message, result, 201);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // POST /api/auth/verify-otp
+  async verifyOTP(req, res, next) {
+    try {
+      const { email, otp } = req.body;
+      if (!email || !otp) {
+        return errorResponse(res, 'Vui lòng cung cấp email và mã OTP 6 số.', null, 400);
+      }
+
+      const result = await authService.verifyOTP({ email, otp });
+      return successResponse(res, result.message, result, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // GET or POST /api/auth/verify-email
+  async verifyEmail(req, res, next) {
+    try {
+      const token = req.query.token || req.body.token;
+      if (!token) {
+        return errorResponse(res, 'Token xác minh không tồn tại.', null, 400);
+      }
+
+      const result = await authService.verifyToken({ token });
+      return successResponse(res, result.message, result, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // POST /api/auth/resend-verification
+  async resendVerification(req, res, next) {
+    try {
+      const { email } = req.body;
+      if (!email) {
+        return errorResponse(res, 'Vui lòng cung cấp địa chỉ email.', null, 400);
+      }
+
+      const baseUrl = this.getBaseUrl(req);
+      const result = await authService.resendVerification({ email }, baseUrl);
+      return successResponse(res, result.message, result, 200);
     } catch (error) {
       next(error);
     }
@@ -30,6 +84,14 @@ class AuthController {
       const result = await authService.login(email, password);
       return successResponse(res, 'Đăng nhập thành công!', result, 200);
     } catch (error) {
+      if (error.code === 'NOT_VERIFIED') {
+        return res.status(403).json({
+          success: false,
+          code: 'NOT_VERIFIED',
+          message: error.message,
+          email: error.email,
+        });
+      }
       next(error);
     }
   }

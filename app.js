@@ -6,6 +6,9 @@ const { notFound, errorHandler } = require('./middlewares/error.middleware');
 // Khởi tạo Express App
 const app = express();
 
+// Tin cậy proxy (Hỗ trợ HTTPS trên Render, Railway, Vercel, Cloudflare, Nginx)
+app.set('trust proxy', 1);
+
 // Middlewares xử lý Request & Bảo mật
 app.use(cors({
   origin: '*',
@@ -34,6 +37,10 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'register.html'));
+});
+
+app.get('/verify', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'verify.html'));
 });
 
 app.get('/chat', (req, res) => {
@@ -84,9 +91,10 @@ app.use('/api/admin', require('./routes/admin.routes'));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
-    message: 'AI Student Assistant API Server is running smoothly!',
+    message: 'Trợ Lý AI Sinh Viên NTU API Server is running smoothly!',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
+    env: process.env.NODE_ENV || 'development',
   });
 });
 

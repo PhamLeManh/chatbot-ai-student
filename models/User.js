@@ -66,6 +66,31 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    // Xác thực tài khoản qua Gmail (OTP / Link)
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationOTP: {
+      type: String,
+      default: null,
+    },
+    verificationOTPExpires: {
+      type: Date,
+      default: null,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
