@@ -118,7 +118,7 @@ NGUYÊN TẮC HOẠT ĐỘNG & NĂNG LỰC:
    * Gọi Google Gemini REST API
    */
   async callGeminiAPI({ apiKey, systemPrompt, messages }) {
-    const model = aiConfig.geminiModel || 'gemini-1.5-flash';
+    const model = aiConfig.geminiModel || 'gemini-3.6-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const contents = [];
