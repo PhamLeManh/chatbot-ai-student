@@ -39,8 +39,15 @@
     <!-- Top Profile Banner -->
     <div class="card" style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
       <div style="display: flex; align-items: center; gap: 1.5rem;">
-        <div style="position: relative;">
-          <img id="profile-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="user-avatar" style="width: 80px; height: 80px; border-width: 2px;">
+        <div style="position: relative; flex-shrink: 0;">
+          <div class="avatar-upload-wrapper" id="avatar-wrapper" onclick="document.getElementById('avatar-file-input').click()" title="Nhấn để đổi ảnh đại diện">
+            <img id="profile-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="user-avatar" style="width: 80px; height: 80px; border-width: 2px; display: block;">
+            <div class="avatar-overlay">
+              <i class="fas fa-camera"></i>
+              <span>Đổi ảnh</span>
+            </div>
+          </div>
+          <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;" onchange="handleAvatarUpload(event)">
         </div>
         <div>
           <h2 id="profile-name" style="font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; color: var(--text-main);">Đang tải...</h2>
@@ -255,6 +262,51 @@
         }
       });
     });
+
+    // ==========================================
+    // Hàm xử lý upload avatar
+    // ==========================================
+    async function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Preview ngay lập tức
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('profile-avatar').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Thêm trạng thái loading lên wrapper
+      const wrapper = document.getElementById('avatar-wrapper');
+      if (wrapper) wrapper.style.opacity = '0.6';
+
+      try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const res = await fetchAPI('/api/users/avatar', {
+          method: 'POST',
+          body: formData,
+        });
+
+        // Cập nhật session localStorage
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          currentUser.avatar = res.data.avatar;
+          setAuthSession(getToken(), currentUser);
+        }
+
+        document.getElementById('profile-avatar').src = res.data.avatar;
+        showToast('Đã cập nhật ảnh đại diện thành công! 🎉', 'success');
+      } catch (err) {
+        showToast(err.message || 'Không thể upload ảnh. Vui lòng thử lại.', 'error');
+      } finally {
+        if (wrapper) wrapper.style.opacity = '1';
+        // Reset input để có thể chọn cùng file lần nữa
+        event.target.value = '';
+      }
+    }
   </script>
 </body>
 </html>

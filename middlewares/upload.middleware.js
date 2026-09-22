@@ -8,7 +8,13 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Cấu hình lưu trữ
+// Đảm bảo thư mục avatars tồn tại
+const avatarDir = path.join(__dirname, '..', 'uploads', 'avatars');
+if (!fs.existsSync(avatarDir)) {
+  fs.mkdirSync(avatarDir, { recursive: true });
+}
+
+// Cấu hình lưu trữ (tài liệu chung)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -22,7 +28,19 @@ const storage = multer.diskStorage({
   },
 });
 
-// Kiểm tra định dạng file
+// Cấu hình lưu trữ riêng cho Avatar
+const avatarStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, avatarDir);
+  },
+  filename: (req, file, cb) => {
+    const userId = req.user ? req.user._id : 'unknown';
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `avatar-${userId}-${Date.now()}${ext}`);
+  },
+});
+
+// Kiểm tra định dạng file (tài liệu)
 const fileFilter = (req, file, cb) => {
   const allowedExtensions = ['.pdf', '.doc', '.docx', '.txt', '.md', '.png', '.jpg', '.jpeg', '.zip', '.pptx'];
   const ext = path.extname(file.originalname).toLowerCase();
@@ -34,6 +52,17 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// Kiểm tra định dạng file ảnh (avatar)
+const avatarFilter = (req, file, cb) => {
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (allowedExtensions.includes(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Chỉ hỗ trợ ảnh JPG, PNG, WEBP hoặc GIF cho avatar.'), false);
+  }
+};
+
 const maxFileSize = parseInt(process.env.MAX_FILE_SIZE, 10) || 20 * 1024 * 1024; // 20MB
 
 const upload = multer({
@@ -42,4 +71,12 @@ const upload = multer({
   fileFilter,
 });
 
+// Multer riêng cho upload avatar (tối đa 5MB)
+const uploadAvatar = multer({
+  storage: avatarStorage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: avatarFilter,
+});
+
 module.exports = upload;
+module.exports.uploadAvatar = uploadAvatar;

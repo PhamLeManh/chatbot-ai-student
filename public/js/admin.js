@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  // Render admin profile ở navbar
+  renderAdminNavbarProfile();
+
   // Khởi tạo các view tương ứng
   const path = window.location.pathname;
   if (path.includes('/dashboard') || path === '/admin') {
@@ -26,7 +29,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else if (path.includes('/documents')) {
     loadAdminDocuments();
   }
+  // /admin/profile được xử lý inline trong profile.html
 });
+
+/**
+ * Render admin profile (avatar + tên + nút logout) ở navbar admin
+ */
+function renderAdminNavbarProfile() {
+  const user = getCurrentUser();
+  const el = document.getElementById('admin-navbar-profile');
+  if (!el || !user) return;
+
+  el.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <a href="/admin/profile" style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.35rem 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-glass); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border-color)'">
+        <img src="${user.avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150'}"
+          alt="${escapeHtml(user.name)}"
+          style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color);">
+        <div style="line-height: 1.2;">
+          <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">${escapeHtml(user.name)}</div>
+          <div style="font-size: 0.72rem; color: var(--danger); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Quản Trị Viên</div>
+        </div>
+      </a>
+      <button onclick="logout()" class="btn btn-icon btn-sm" title="Đăng xuất" style="border: 1px solid var(--border-color); color: var(--text-muted);">
+        <i class="fas fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  `;
+}
+
+
 
 // ==========================================
 // 1. Thống kê Tổng quan (Dashboard)
@@ -62,9 +94,10 @@ async function loadDashboardStats() {
               </div>
             </div>
           </td>
-          <td><span class="badge ${u.role === 'admin' ? 'badge-danger' : 'badge-primary'}">${u.role.toUpperCase()}</span></td>
-          <td>${escapeHtml(u.university || 'N/A')}</td>
-          <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+          <td><span class="badge badge-primary">${escapeHtml(u.studentId || 'N/A')}</span></td>
+          <td>${escapeHtml(u.major || u.university || 'Chưa cập nhật')}</td>
+          <td>${u.streak || 0} ngày 🔥</td>
+          <td>${new Date(u.createdAt).toLocaleDateString('vi-VN')}</td>
         </tr>
       `
         )

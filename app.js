@@ -76,6 +76,11 @@ app.get('/admin/documents', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin', 'documents.html'));
 });
 
+app.get('/admin/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'profile.html'));
+});
+
+
 // ==========================================
 // GẮN CÁC RESTFUL API ROUTES (/api/...)
 // ==========================================

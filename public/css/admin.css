@@ -235,3 +235,69 @@
     padding: 1.5rem;
   }
 }
+
+/* ==========================================================================
+   AVATAR UPLOAD (Dùng cho cả Admin Profile và User Profile)
+   ========================================================================== */
+.avatar-upload-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.avatar-upload-wrapper:hover {
+  transform: scale(1.04);
+}
+
+.avatar-upload-wrapper img {
+  display: block;
+  border-radius: 50%;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  border-radius: 50%;
+}
+
+.avatar-upload-wrapper:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-overlay i {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.avatar-overlay span {
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   ADMIN SIDEBAR — Đặt item cuối cùng xuống dưới
+   ========================================================================== */
+.admin-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-nav li:last-child {
+  margin-top: auto;
+}
+

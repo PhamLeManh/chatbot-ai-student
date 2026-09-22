@@ -1,8 +1,9 @@
+const path = require('path');
 const Conversation = require('../models/Conversation');
 const StudyPlan = require('../models/StudyPlan');
 const Document = require('../models/Document');
 const User = require('../models/User');
-const { successResponse } = require('../utils/response');
+const { successResponse, errorResponse } = require('../utils/response');
 
 class UserController {
   // GET /api/users/stats
@@ -73,6 +74,45 @@ class UserController {
       next(error);
     }
   }
+
+  // POST /api/users/avatar
+  async uploadAvatar(req, res, next) {
+    try {
+      if (!req.file) {
+        return errorResponse(res, 'Vui lòng chọn file ảnh để tải lên.', null, 400);
+      }
+
+      // Tạo URL công khai cho ảnh
+      const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+      // Cập nhật avatar trong DB
+      const updatedUser = await User.findByIdAndUpdate(
+        req.user._id,
+        { avatar: avatarUrl },
+        { new: true }
+      );
+
+      return successResponse(res, 'Cập nhật ảnh đại diện thành công!', {
+        avatar: updatedUser.avatar,
+        user: {
+          id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          role: updatedUser.role,
+          studentId: updatedUser.studentId,
+          university: updatedUser.university,
+          major: updatedUser.major,
+          avatar: updatedUser.avatar,
+          bio: updatedUser.bio,
+          streak: updatedUser.streak,
+          preferences: updatedUser.preferences,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new UserController();
+

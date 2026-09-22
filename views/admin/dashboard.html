@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bảng Điều Khiển Quản Trị - Trường Đại Học Nguyễn Trãi (NTU)</title>
+  <meta name="description" content="Bảng điều khiển quản trị hệ thống AI NTU - Quản lý sinh viên, học phần và tài liệu.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 
-
-  <!-- NAVBAR -->
+  <!-- ADMIN NAVBAR (tách riêng, không có link user) -->
   <nav class="navbar">
     <a href="/admin/dashboard" class="nav-brand">
       <div class="brand-icon">
@@ -22,9 +22,8 @@
     </a>
 
     <div class="nav-actions">
-      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-comments"></i> Về Chatbot AI</a>
       <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Sáng / Tối"><i class="fas fa-sun"></i></button>
-      <div id="navbar-auth-actions"></div>
+      <div id="admin-navbar-profile"></div>
     </div>
   </nav>
 
@@ -37,13 +36,16 @@
           <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> <span>Tổng Quan NTU</span></a>
         </li>
         <li class="admin-nav-item">
-          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên & Người Dùng</span></a>
+          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên &amp; Người Dùng</span></a>
         </li>
         <li class="admin-nav-item">
-          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành & Học Phần</span></a>
+          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành &amp; Học Phần</span></a>
         </li>
         <li class="admin-nav-item">
           <a href="/admin/documents"><i class="fas fa-file-alt"></i> <span>Kho Tài Liệu Học Tập</span></a>
+        </li>
+        <li class="admin-nav-item" style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+          <a href="/admin/profile"><i class="fas fa-user-shield"></i> <span>Hồ Sơ Quản Trị</span></a>
         </li>
       </ul>
     </aside>
@@ -124,10 +126,6 @@
 
   <script src="/js/main.js"></script>
   <script src="/js/admin.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      await loadAdminDashboard();
-    });
-  </script>
+
 </body>
 </html>

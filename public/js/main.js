@@ -93,6 +93,16 @@ async function fetchAPI(endpoint, options = {}) {
 }
 
 // ==========================================
+// Utility: Escape HTML để tránh XSS
+// ==========================================
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(String(text)));
+  return div.innerHTML;
+}
+
+// ==========================================
 // 3. Toast Notifications
 // ==========================================
 function showToast(message, type = 'info', duration = 3500) {

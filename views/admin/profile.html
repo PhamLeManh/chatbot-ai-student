@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Sơ Quản Trị Viên - Đại Học Nguyễn Trãi (NTU)</title>
+  <meta name="description" content="Hồ sơ và cài đặt tài khoản quản trị viên hệ thống AI NTU.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- ADMIN NAVBAR -->
+  <nav class="navbar">
+    <a href="/admin/dashboard" class="nav-brand">
+      <div class="brand-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <span>Quản Trị <span style="font-weight: 800;">ĐH Nguyễn Trãi</span></span>
+      <span class="brand-badge">ADMIN</span>
+    </a>
+
+    <div class="nav-actions">
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Sáng / Tối"><i class="fas fa-sun"></i></button>
+      <div id="admin-navbar-profile"></div>
+    </div>
+  </nav>
+
+  <!-- ADMIN LAYOUT -->
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <ul class="admin-nav">
+        <li class="admin-nav-item">
+          <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> <span>Tổng Quan NTU</span></a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên &amp; Người Dùng</span></a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành &amp; Học Phần</span></a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/documents"><i class="fas fa-file-alt"></i> <span>Kho Tài Liệu Học Tập</span></a>
+        </li>
+        <li class="admin-nav-item active" style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+          <a href="/admin/profile"><i class="fas fa-user-shield"></i> <span>Hồ Sơ Quản Trị</span></a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-page-header">
+        <div>
+          <h1 class="admin-page-title">Hồ Sơ Quản Trị Viên</h1>
+          <p class="admin-page-subtitle">Quản lý thông tin tài khoản, ảnh đại diện và bảo mật của Quản trị viên</p>
+        </div>
+      </div>
+
+      <!-- Admin Profile Banner -->
+      <div class="card" style="margin-bottom: 2rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <!-- Avatar Upload -->
+        <div style="position: relative; flex-shrink: 0;">
+          <div class="avatar-upload-wrapper" id="avatar-wrapper" onclick="document.getElementById('admin-avatar-input').click()" title="Nhấn để đổi ảnh đại diện">
+            <img id="admin-avatar-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80"
+              class="user-avatar" style="width: 100px; height: 100px; border-width: 3px; display: block;">
+            <div class="avatar-overlay">
+              <i class="fas fa-camera"></i>
+              <span>Đổi ảnh</span>
+            </div>
+          </div>
+          <input type="file" id="admin-avatar-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;" onchange="handleAdminAvatarUpload(event)">
+          <div id="avatar-upload-loading" style="display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.5); border-radius: 50%; display: none; align-items: center; justify-content: center;">
+            <i class="fas fa-spinner fa-spin" style="color: white; font-size: 1.5rem;"></i>
+          </div>
+        </div>
+
+        <div>
+          <h2 id="admin-profile-name" style="font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; color: var(--text-main);">Đang tải...</h2>
+          <p id="admin-profile-email" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;"></p>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.6rem;">
+            <span class="badge badge-danger"><i class="fas fa-shield-alt"></i> QUẢN TRỊ VIÊN</span>
+            <span class="badge badge-primary">NTU Admin Panel</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-dim); margin-top: 0.5rem;">
+            <i class="fas fa-info-circle"></i> Nhấn vào ảnh để thay đổi ảnh đại diện (JPG, PNG, WEBP – tối đa 5MB)
+          </p>
+        </div>
+      </div>
+
+      <!-- Forms Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem;">
+        <!-- Update Admin Info -->
+        <div class="card">
+          <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem;">
+            <i class="fas fa-user-edit"></i> Cập Nhật Thông Tin Quản Trị
+          </h3>
+
+          <form id="admin-profile-form">
+            <div class="form-group">
+              <label class="form-label" for="admin-edit-name">Họ và Tên Quản Trị Viên</label>
+              <input type="text" id="admin-edit-name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="admin-edit-email">Email (Chỉ đọc)</label>
+              <input type="email" id="admin-edit-email" class="form-control" readonly style="opacity: 0.6; cursor: not-allowed;">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="admin-edit-bio">Ghi Chú / Mô Tả Tài Khoản</label>
+              <textarea id="admin-edit-bio" class="form-control" rows="3" placeholder="Ví dụ: Quản trị viên trưởng hệ thống AI NTU..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-save"></i> Lưu Thay Đổi
+            </button>
+          </form>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card">
+          <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem;">
+            <i class="fas fa-lock"></i> Đổi Mật Khẩu Admin
+          </h3>
+
+          <form id="admin-password-form">
+            <div class="form-group">
+              <label class="form-label" for="admin-current-password">Mật Khẩu Hiện Tại</label>
+              <input type="password" id="admin-current-password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="admin-new-password">Mật Khẩu Mới (Tối thiểu 6 ký tự)</label>
+              <input type="password" id="admin-new-password" class="form-control" minlength="6" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="admin-confirm-password">Xác Nhận Mật Khẩu Mới</label>
+              <input type="password" id="admin-confirm-password" class="form-control" minlength="6" required>
+            </div>
+
+            <button type="submit" class="btn btn-secondary" style="width: 100%;">
+              <i class="fas fa-key"></i> Cập Nhật Mật Khẩu
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="card" style="margin-top: 1.75rem; border-color: var(--danger); background: rgba(var(--danger-rgb, 220,38,38), 0.05);">
+        <h3 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--danger); margin-bottom: 0.75rem;">
+          <i class="fas fa-exclamation-triangle"></i> Vùng Nguy Hiểm
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Đăng xuất khỏi phiên quản trị hiện tại.</p>
+        <button onclick="logout()" class="btn btn-secondary" style="border-color: var(--danger); color: var(--danger);">
+          <i class="fas fa-arrow-right-from-bracket"></i> Đăng Xuất Admin
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = getToken();
+      const user = getCurrentUser();
+
+      if (!token || !user || user.role !== 'admin') {
+        showToast('Từ chối truy cập! Trang này chỉ dành cho Quản trị viên.', 'error');
+        window.location.href = '/login';
+        return;
+      }
+
+      // Load thông tin admin hiện tại
+      try {
+        const result = await fetchAPI('/api/auth/me');
+        const adminUser = result.data;
+
+        document.getElementById('admin-profile-name').innerText = adminUser.name;
+        document.getElementById('admin-profile-email').innerText = adminUser.email;
+        document.getElementById('admin-edit-name').value = adminUser.name || '';
+        document.getElementById('admin-edit-email').value = adminUser.email || '';
+        document.getElementById('admin-edit-bio').value = adminUser.bio || '';
+
+        if (adminUser.avatar) {
+          document.getElementById('admin-avatar-img').src = adminUser.avatar;
+        }
+      } catch (err) {
+        showToast('Không thể tải thông tin tài khoản.', 'error');
+      }
+
+      // Form cập nhật thông tin
+      document.getElementById('admin-profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('admin-edit-name').value.trim();
+        const bio = document.getElementById('admin-edit-bio').value.trim();
+
+        try {
+          const res = await fetchAPI('/api/auth/profile', {
+            method: 'PUT',
+            body: JSON.stringify({ name, bio }),
+          });
+          setAuthSession(getToken(), res.data);
+          showToast('Cập nhật thông tin quản trị thành công!', 'success');
+          document.getElementById('admin-profile-name').innerText = name;
+          renderAdminNavbarProfile();
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      });
+
+      // Form đổi mật khẩu
+      document.getElementById('admin-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const currentPassword = document.getElementById('admin-current-password').value;
+        const newPassword = document.getElementById('admin-new-password').value;
+        const confirmPassword = document.getElementById('admin-confirm-password').value;
+
+        if (newPassword !== confirmPassword) {
+          showToast('Mật khẩu mới không khớp!', 'warning');
+          return;
+        }
+
+        try {
+          const res = await fetchAPI('/api/auth/change-password', {
+            method: 'PUT',
+            body: JSON.stringify({ currentPassword, newPassword }),
+          });
+          showToast(res.message || 'Đổi mật khẩu thành công!', 'success');
+          document.getElementById('admin-password-form').reset();
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      });
+    });
+
+    async function handleAdminAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Preview ngay
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('admin-avatar-img').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Upload lên server
+      const loadingEl = document.getElementById('avatar-upload-loading');
+      if (loadingEl) loadingEl.style.display = 'flex';
+
+      try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const res = await fetchAPI('/api/users/avatar', {
+          method: 'POST',
+          body: formData,
+        });
+
+        // Cập nhật localStorage session
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          currentUser.avatar = res.data.avatar;
+          setAuthSession(getToken(), currentUser);
+        }
+
+        document.getElementById('admin-avatar-img').src = res.data.avatar;
+        showToast('Đã cập nhật ảnh đại diện quản trị thành công!', 'success');
+        renderAdminNavbarProfile();
+      } catch (err) {
+        showToast(err.message || 'Không thể upload ảnh.', 'error');
+      } finally {
+        if (loadingEl) loadingEl.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

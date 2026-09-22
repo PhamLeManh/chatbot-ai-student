@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quản Lý Học Phần 10 Ngành - Đại Học Nguyễn Trãi (NTU)</title>
+  <meta name="description" content="Quản lý danh mục học phần 10 ngành đào tạo NTU.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 
-
-  <!-- NAVBAR -->
+  <!-- ADMIN NAVBAR -->
   <nav class="navbar">
     <a href="/admin/dashboard" class="nav-brand">
       <div class="brand-icon">
@@ -22,9 +22,8 @@
     </a>
 
     <div class="nav-actions">
-      <a href="/chat" class="btn btn-secondary btn-sm"><i class="fas fa-comments"></i> Về Chatbot AI</a>
-      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện"><i class="fas fa-sun"></i></button>
-      <div id="navbar-auth-actions"></div>
+      <button class="btn btn-icon theme-toggle-btn" title="Đổi giao diện Sáng / Tối"><i class="fas fa-sun"></i></button>
+      <div id="admin-navbar-profile"></div>
     </div>
   </nav>
 
@@ -37,13 +36,16 @@
           <a href="/admin/dashboard"><i class="fas fa-chart-pie"></i> <span>Tổng Quan NTU</span></a>
         </li>
         <li class="admin-nav-item">
-          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên & Người Dùng</span></a>
+          <a href="/admin/users"><i class="fas fa-users"></i> <span>Sinh Viên &amp; Người Dùng</span></a>
         </li>
         <li class="admin-nav-item active">
-          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành & Học Phần</span></a>
+          <a href="/admin/courses"><i class="fas fa-book"></i> <span>10 Ngành &amp; Học Phần</span></a>
         </li>
         <li class="admin-nav-item">
           <a href="/admin/documents"><i class="fas fa-file-alt"></i> <span>Kho Tài Liệu Học Tập</span></a>
+        </li>
+        <li class="admin-nav-item" style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+          <a href="/admin/profile"><i class="fas fa-user-shield"></i> <span>Hồ Sơ Quản Trị</span></a>
         </li>
       </ul>
     </aside>
@@ -91,7 +93,7 @@
 
         <div class="form-group">
           <label class="form-label" for="course-name">Tên Học Phần <span style="color: var(--danger);">*</span></label>
-          <input type="text" id="course-name" class="form-control" placeholder="Vd: Cấu Trúc Dữ Liệu & Phát Triển Ứng Dụng Web/AI" required>
+          <input type="text" id="course-name" class="form-control" placeholder="Vd: Cấu Trúc Dữ Liệu &amp; Phát Triển Ứng Dụng Web/AI" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
@@ -107,7 +109,7 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="course-description">Mô Tả Học Phần & Đề Cương</label>
+          <label class="form-label" for="course-description">Mô Tả Học Phần &amp; Đề Cương</label>
           <textarea id="course-description" class="form-control" rows="3" placeholder="Nội dung tóm tắt kiến thức của môn học..."></textarea>
         </div>
 
