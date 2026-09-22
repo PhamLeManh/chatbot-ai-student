@@ -1,3 +1,5 @@
+global.crypto = require('crypto');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
